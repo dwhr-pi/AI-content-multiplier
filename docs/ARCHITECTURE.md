@@ -1,56 +1,43 @@
-# Architektur
+# Architecture
 
-AI-ContentMultiplier ist als Workflow-Schicht zwischen Quellen, Modellen und
-Ausgabezielen gedacht.
+AI Content Multiplier uses a CLI-first, local-first architecture with a modular
+registry that can grow from prompt-driven MVPs into richer adapters and
+automation flows.
+
+## Core layers
 
 ```text
-Input Adapter
-  URL / PDF / YouTube Transcript / LinkedIn / Text
+Inputs
+  URL / Text / Markdown / PDF / Transcript / Repo URL
       |
       v
-Extractor
-  Firecrawl / PDF Parser / Transcript Import / Manual Text
+CLI Router
+  src/cli.ts
       |
       v
-Analysis Layer
-  Summary / Claims / Audience / Tone / SEO / Risk Notes
+Tool Registry
+  src/registry/tool-registry.ts
       |
       v
-Model Router
-  Ollama local-first / Gemini / Claude / OpenAI optional
+Tool Modules
+  content-multiplier / prompt-generator / github-scout / planned tools
       |
       v
-Content Generator
-  LinkedIn / Blog / Newsletter / X Thread / Facebook / FAQ / Keywords
-      |
-      v
-Exporter
-  Markdown / HTML / DOCX / PDF
-      |
-      v
-Integrations
-  OpenClaw / n8n / Nextcloud / Home Assistant
+Outputs
+  Markdown / JSON / Workflow assets / Local reports
 ```
 
-## Komponenten
+## Design principles
 
-| Komponente | Aufgabe |
-|---|---|
-| Input Adapter | Nimmt URLs, Dateien oder Rohtexte entgegen. |
-| Extractor | Wandelt Quellen in sauberen Text oder Markdown um. |
-| Analysis Layer | Erkennt Kernaussagen, Zielgruppe, Risiken und Content-Chancen. |
-| Model Router | Waehlt Ollama oder bewusst aktivierte Cloud-Modelle. |
-| Content Generator | Erzeugt die gewuenschten Formate. |
-| Exporter | Speichert Markdown, HTML, DOCX und PDF. |
-| Integration Layer | Uebergibt Ergebnisse an OpenClaw, n8n, Nextcloud oder Home Assistant. |
+- Local-first by default with Ollama as the primary model target
+- Simple, inspectable CLI workflows before background automation
+- Tool isolation so each module can evolve independently
+- Markdown and JSON as the default portable output formats
+- Optional integrations through config and environment variables
 
-## Local-first Standard
+## Planned evolution
 
-Ollama ist der Standardpfad. Cloud-Anbieter werden nur aktiviert, wenn
-`ALLOW_CLOUD_MODE=true` gesetzt ist und der passende API-Key lokal vorhanden ist.
-
-## Kein Auto-Publish
-
-Der Workflow erzeugt Entwuerfe. Automatisches Veröffentlichen in sozialen
-Netzwerken ist standardmaessig deaktiviert und muss bewusst separat umgesetzt
-werden.
+1. Replace heuristic generation with model adapters
+2. Add workflow exporter and knowledge-base persistence
+3. Add Firecrawl, PDF, and transcript ingestion adapters
+4. Add RAG-ready storage and retrieval workflows

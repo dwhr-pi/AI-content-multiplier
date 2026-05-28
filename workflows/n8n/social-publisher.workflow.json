@@ -1,0 +1,103 @@
+{
+  "name": "Social Publisher Approval Workflow Blueprint",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "social-publisher",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "Webhook_Input",
+      "name": "Webhook: Social Draft Input",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { platform: $json.platform || 'instagram', media: $json.media || {}, draft: $json.draft || '', approval_required: true } }];"
+      },
+      "id": "Normalize_Request",
+      "name": "Normalize Social Draft",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { ...$json, caption_step: 'generate caption', hashtag_step: 'generate hashtags', media_step: 'prepare media', review_step: 'approval required before publish' } }];"
+      },
+      "id": "Prepare_Draft",
+      "name": "Prepare Draft Plan",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        500,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'awaiting_human_approval', review_required: true, plan: $json } }}"
+      },
+      "id": "Respond",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        760,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook: Social Draft Input": {
+      "main": [
+        [
+          {
+            "node": "Normalize Social Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Social Draft": {
+      "main": [
+        [
+          {
+            "node": "Prepare Draft Plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Draft Plan": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "versionId": "social-blueprint",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

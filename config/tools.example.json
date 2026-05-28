@@ -1,0 +1,25 @@
+{
+  "content-multiplier": {
+    "status": "mvp",
+    "defaultOutputFormat": "markdown"
+  },
+  "prompt-generator": {
+    "status": "mvp",
+    "defaultTarget": "general"
+  },
+  "github-scout": {
+    "status": "mvp",
+    "requiresTokenForHigherRateLimit": true
+  },
+  "social-publisher": {
+    "status": "planned",
+    "requiresHumanApproval": true,
+    "officialApisOnly": true
+  },
+  "reverse-engineer": {
+    "status": "planned"
+  },
+  "research-agent": {
+    "status": "planned"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "Social_Publisher_Agent",
+  "display_name": "Social Publisher",
+  "description": "Erstellt Social-Media-Entwuerfe, prueft Richtlinien und bereitet human-approved Publishing ueber offizielle APIs vor.",
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "base_url": "http://127.0.0.1:11434",
+  "mode": "local_first",
+  "workflow_type": "social_publishing",
+  "inputs": [
+    "post_draft",
+    "platform",
+    "media_paths",
+    "schedule_at"
+  ],
+  "outputs": [
+    "draft_caption",
+    "hashtag_set",
+    "review_notes",
+    "publish_plan"
+  ],
+  "security_rules": [
+    "Do not create accounts.",
+    "Do not store passwords.",
+    "Use official APIs only.",
+    "Require explicit human approval before scheduling or publishing.",
+    "Do not auto-publish without confirm state."
+  ],
+  "review_required": true
+}

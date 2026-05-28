@@ -1,0 +1,13 @@
+{
+  "platform": "instagram",
+  "account": "main",
+  "type": "reel",
+  "media": {
+    "video": "./output/reel.mp4",
+    "cover": "./output/cover.jpg"
+  },
+  "caption": "A short reel about building modular AI publishing systems the safe way.",
+  "hashtags": ["#ai", "#content", "#reels"],
+  "schedule_at": "2026-06-01T18:00:00+02:00",
+  "requires_approval": true
+}

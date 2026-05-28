@@ -1,0 +1,21 @@
+{
+  "defaultProvider": "ollama",
+  "providers": {
+    "ollama": {
+      "baseUrl": "http://127.0.0.1:11434",
+      "defaultModel": "llama3.2:latest"
+    },
+    "openai": {
+      "enabled": false,
+      "defaultModel": "gpt-4.1-mini"
+    },
+    "anthropic": {
+      "enabled": false,
+      "defaultModel": "claude-3-5-sonnet-latest"
+    },
+    "gemini": {
+      "enabled": false,
+      "defaultModel": "gemini-2.5-flash"
+    }
+  }
+}

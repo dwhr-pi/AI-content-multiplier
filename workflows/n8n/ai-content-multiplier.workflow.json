@@ -1,0 +1,127 @@
+{
+  "name": "AI-ContentMultiplier Workflow Blueprint",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "ai-content-multiplier",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "Webhook_Input",
+      "name": "Webhook: Content Source",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { source: $json.url || $json.text || $json.pdf_path || '', requested_outputs: $json.outputs || ['linkedin_posts','blog_article','newsletter','faq','seo_keywords'], safety: { require_human_review: true, allow_auto_publish: false } } }];"
+      },
+      "id": "Normalize_Request",
+      "name": "Normalize Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{$env.OPENCLAW_GATEWAY_URL || 'http://127.0.0.1:18789'}}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "agent",
+              "value": "AI_ContentMultiplier_Agent"
+            },
+            {
+              "name": "payload",
+              "value": "={{$json}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "OpenClaw_Call",
+      "name": "OpenClaw: Generate Drafts",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        540,
+        0
+      ],
+      "notes": "Blueprint only: adapt endpoint/auth to your OpenClaw gateway. Do not store tokens in this workflow JSON."
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'draft_created', review_required: true, result: $json } }}"
+      },
+      "id": "Respond",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        820,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook: Content Source": {
+      "main": [
+        [
+          {
+            "node": "Normalize Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Request": {
+      "main": [
+        [
+          {
+            "node": "OpenClaw: Generate Drafts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenClaw: Generate Drafts": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "versionId": "blueprint",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": [
+    {
+      "name": "openclaw"
+    },
+    {
+      "name": "content"
+    }
+  ]
+}

@@ -1,100 +1,132 @@
-# AI-ContentMultiplier
+# AI Content Multiplier
 
-AI-ContentMultiplier ist ein Workflow-Tool fuer das Ultimate KI Setup. Es nimmt
-Quellen wie URLs, PDFs, Webseiten, YouTube-Transkripte oder LinkedIn-Inhalte
-entgegen und erzeugt daraus mehrere Content-Formate.
+AI Content Multiplier is a local-first, modular tool collection for analyzing,
+reconstructing, transforming, and exporting content for multiple platforms.
 
-Der Schwerpunkt liegt nicht auf einer schweren Autoinstallation, sondern auf
-einem sicheren, modularen Workflow fuer OpenClaw, n8n, Ollama und optionale
-Cloud-Modelle.
+The repository is designed as a building block for an "Ultimate KI Setup" with
+strong support for Ollama, OpenClaw, n8n, Firecrawl, GitHub, Nextcloud, and
+Home Assistant.
 
-## Funktionen
+## What is included
 
-- URL-Eingabe und Webseitenanalyse
-- Firecrawl-Integration fuer Crawling und Markdown-Extraktion
-- PDF-Unterstuetzung
-- YouTube-Transcript-Analyse
-- LinkedIn-Analyse fuer eigene oder freigegebene Inhalte
-- Ausgabe als Markdown, HTML, DOCX und PDF
-- Erzeugung von LinkedIn Posts, Blogartikeln, Newslettern, X Threads,
-  Facebook Posts, FAQ und SEO Keywords
+- A TypeScript CLI for local workflows
+- A modular tool registry with implemented and planned tools
+- MVPs for `content-multiplier`, `prompt-generator`, and `github-scout`
+- OpenClaw, n8n, and Ollama workflow assets
+- Reusable profiles for content, research, reverse engineering, and planning
+- Example inputs, outputs, reports, and integration configs
 
-## Modellanbieter
+## Current tool status
 
-Standard ist lokal-first:
+| Tool | Status | Purpose |
+|---|---|---|
+| Content Multiplier | MVP | Turns source material into multi-platform draft outputs |
+| Prompt Generator Pro | MVP | Builds prompts plus model recommendations |
+| GitHub Scout | MVP | Analyzes GitHub repositories and integration potential |
+| Content Reverse Engineer | Planned | Breaks down viral hooks, CTA patterns, and storytelling |
+| AI Research Agent | Planned | Creates summaries, comparisons, and source-backed reports |
+| Open Source Clone Finder | Planned | Finds alternatives, forks, and clone ecosystems |
+| Project Architect | Planned | Converts ideas into architecture, roadmap, and MVP plans |
+| Video Factory | Planned | Generates scripts, storyboards, prompt chains, and shot plans |
+| Social Publisher | Planned | Prepares human-approved publishing drafts for official social APIs |
+| Self Learning Knowledge Base | Planned | Stores knowledge and prepares RAG-friendly assets |
+| Workflow Exporter | Planned | Exports results to automation and document formats |
 
-- Ollama fuer private, lokale Verarbeitung
-- Gemini optional
-- Claude optional
-- OpenAI optional
-
-Cloud-Modelle werden nur genutzt, wenn API-Keys bewusst in der lokalen
-Benutzerkonfiguration gesetzt wurden. Es werden keine Secrets in dieses
-Repository geschrieben.
-
-## Integrationen
-
-- OpenClaw: Agentenprofil und Workflow-Orchestrierung
-- n8n: Automatisierung, Webhooks und Ablage
-- Home Assistant: Benachrichtigungen und einfache Trigger
-- Nextcloud/myNextCloud: Eingabe-/Ausgabeordner fuer Dokumente und Ergebnisse
-
-## Schnellstart im Ultimate KI Setup
-
-1. `.env.example` nach einem lokalen Speicherort kopieren, z. B.:
-
-   ```bash
-   mkdir -p ~/.openclaw_ultimate_user_data/content-multiplier
-   cp .env.example ~/.openclaw_ultimate_user_data/content-multiplier/.env
-   ```
-
-2. Ollama lokal starten und ein Modell bereitstellen:
-
-   ```bash
-   ollama serve
-   ollama pull llama3.2:1b
-   ```
-
-3. OpenClaw-Agentprofil aus `openclaw/ai-content-multiplier.agent.json`
-   importieren oder als Vorlage verwenden.
-
-4. n8n-Blueprint aus `n8n/ai-content-multiplier.workflow.json` importieren.
-
-5. Ergebnisse in `output/` oder in Nextcloud/myNextCloud speichern lassen.
-
-## Workflow
+## Project layout
 
 ```text
-Quelle
-  -> Extraktion
-  -> Analyse
-  -> Content-Plan
-  -> Format-Erzeugung
-  -> Review
-  -> Export
-  -> Ablage/Benachrichtigung
+AI-content-multiplier/
+├─ config/
+├─ docs/
+├─ examples/
+├─ profiles/
+├─ scripts/
+├─ src/
+├─ tools/
+├─ workflows/
+├─ .env.example
+├─ package.json
+├─ README.md
+└─ tsconfig.json
 ```
 
-Details stehen in [docs/WORKFLOW.md](docs/WORKFLOW.md).
+The repository also keeps legacy top-level folders such as `openclaw/`,
+`n8n/`, `nextcloud/`, and `home-assistant/` for compatibility with the
+existing setup. The new canonical workflow assets live in `workflows/`.
 
-## Sicherheit
+## Quick start
 
-- Keine fremden Inhalte ohne Nutzungsrecht automatisiert republizieren.
-- LinkedIn- und YouTube-Inhalte nur analysieren, wenn Zugriff und Nutzung
-  erlaubt sind.
-- API-Keys nur lokal unter `~/.openclaw_ultimate_user_data` speichern.
-- Cloud-Modelle nur nach bewusster Freigabe verwenden.
-- Automatisches Posten ist standardmaessig deaktiviert; der Workflow erzeugt
-  Entwuerfe.
+```bash
+pnpm install
+pnpm build
 
-## Dokumentation
+pnpm ai-content list
+pnpm ai-content analyze-url "https://example.com"
+pnpm ai-content multiply examples/input/sample-source.md
+pnpm ai-content github https://github.com/openai/openai-cookbook
+pnpm ai-content prompt "Create a Celtic trance music video"
+pnpm ai-content social
+```
 
-- [Architektur](docs/ARCHITECTURE.md)
-- [Workflow](docs/WORKFLOW.md)
-- [Setup im Ultimate KI Setup](docs/ULTIMATE_KI_SETUP_INTEGRATION.md)
-- [OpenClaw Integration](docs/OPENCLAW_INTEGRATION.md)
-- [n8n Integration](docs/N8N_INTEGRATION.md)
-- [Nextcloud/myNextCloud Integration](docs/NEXTCLOUD_INTEGRATION.md)
-- [Home Assistant Integration](docs/HOME_ASSISTANT_INTEGRATION.md)
-- [Sicherheits- und Rechtsnotizen](docs/SAFETY_AND_COMPLIANCE.md)
-- [Toolsammlung](docs/TOOL_COLLECTION.md)
+## CLI commands
+
+```bash
+pnpm ai-content list
+pnpm ai-content doctor
+pnpm ai-content analyze-url "https://example.com" --output markdown
+pnpm ai-content multiply input.md --output json
+pnpm ai-content reverse transcript.md
+pnpm ai-content github https://github.com/example/repo
+pnpm ai-content prompt "Erstelle ein Musikvideo im Celtic Trance Stil"
+pnpm ai-content social
+```
+
+## Local-first defaults
+
+- Ollama is the default model route
+- Cloud APIs stay optional through environment variables
+- Generated content is treated as draft output
+- Auto-publishing is disabled by default
+- Secrets must never be committed
+
+## Integrations
+
+- Ollama for local text generation
+- OpenClaw for agent orchestration
+- n8n for workflow automation
+- Firecrawl for URL extraction
+- GitHub for repository intelligence
+- Official social APIs for human-approved publishing workflows
+- Nextcloud/myNextcloud for file storage
+- Home Assistant for local notifications and triggers
+
+## Documentation
+
+- [Architecture](docs/architecture.md)
+- [Tools](docs/tools.md)
+- [Workflows](docs/workflows.md)
+- [Prompts](docs/prompts.md)
+- [API](docs/api.md)
+- [Setup](docs/setup.md)
+
+Legacy integration notes remain available in:
+
+- [Legacy architecture](docs/ARCHITECTURE.md)
+- [Legacy workflow](docs/WORKFLOW.md)
+- [Ultimate setup integration](docs/ULTIMATE_KI_SETUP_INTEGRATION.md)
+
+## Safety
+
+- Do not commit API keys, tokens, or personal data
+- Review generated content before publication
+- Respect copyright, licensing, and platform terms
+- Use cloud models only after explicit local configuration
+- Never automate fake-account creation, password login, or cookie-based posting
+
+## Roadmap
+
+1. Stabilize the CLI MVPs
+2. Add real Ollama and Firecrawl adapters
+3. Extend workflow export targets
+4. Add knowledge-base, research, and social publishing modules
+5. Expand automation templates for n8n and OpenClaw

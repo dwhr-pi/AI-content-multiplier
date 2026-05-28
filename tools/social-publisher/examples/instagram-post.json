@@ -1,0 +1,12 @@
+{
+  "platform": "instagram",
+  "account": "main",
+  "type": "image",
+  "media": {
+    "image": "./output/instagram-post.jpg"
+  },
+  "caption": "A practical local-first workflow for turning source material into reusable content drafts.",
+  "hashtags": ["#ai", "#content", "#automation"],
+  "schedule_at": "2026-06-01T18:00:00+02:00",
+  "requires_approval": true
+}
