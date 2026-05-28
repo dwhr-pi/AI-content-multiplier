@@ -97,3 +97,4 @@ Details stehen in [docs/WORKFLOW.md](docs/WORKFLOW.md).
 - [Nextcloud/myNextCloud Integration](docs/NEXTCLOUD_INTEGRATION.md)
 - [Home Assistant Integration](docs/HOME_ASSISTANT_INTEGRATION.md)
 - [Sicherheits- und Rechtsnotizen](docs/SAFETY_AND_COMPLIANCE.md)
+- [Toolsammlung](docs/TOOL_COLLECTION.md)
