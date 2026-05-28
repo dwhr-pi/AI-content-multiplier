@@ -1,0 +1,12 @@
+alias: AI-ContentMultiplier Ergebnis bereit
+description: Benachrichtigt, wenn ein Content-Paket auf Review wartet.
+trigger:
+  - platform: webhook
+    webhook_id: ai_content_multiplier_ready
+condition: []
+action:
+  - service: notify.notify
+    data:
+      title: AI-ContentMultiplier
+      message: "Ein neues Content-Paket wurde erstellt und wartet auf Review."
+mode: single

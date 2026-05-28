@@ -1,0 +1,17 @@
+{
+  "url": "https://example.com/article",
+  "outputs": [
+    "linkedin_posts",
+    "blog_article",
+    "newsletter",
+    "x_thread",
+    "facebook_posts",
+    "faq",
+    "seo_keywords"
+  ],
+  "model_provider": "ollama",
+  "model": "llama3.2:1b",
+  "language": "de",
+  "tone": "klar, hilfreich, professionell",
+  "review_required": true
+}

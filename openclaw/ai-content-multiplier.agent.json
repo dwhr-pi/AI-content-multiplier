@@ -1,0 +1,55 @@
+{
+  "name": "AI_ContentMultiplier_Agent",
+  "display_name": "AI-ContentMultiplier",
+  "description": "Erzeugt aus URLs, PDFs, Webseiten, YouTube-Transkripten und LinkedIn-Inhalten mehrere Content-Entwuerfe.",
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "base_url": "http://127.0.0.1:11434",
+  "mode": "local_first",
+  "workflow_type": "content_multiplication",
+  "inputs": [
+    "url",
+    "pdf_path",
+    "webpage_markdown",
+    "youtube_transcript",
+    "linkedin_text",
+    "raw_text"
+  ],
+  "outputs": [
+    "markdown",
+    "html",
+    "docx",
+    "pdf"
+  ],
+  "content_types": [
+    "linkedin_posts",
+    "blog_article",
+    "newsletter",
+    "x_thread",
+    "facebook_posts",
+    "faq",
+    "seo_keywords"
+  ],
+  "allowed_tools": [
+    "ollama",
+    "firecrawl_optional",
+    "pdf_parser_optional",
+    "pandoc_optional",
+    "n8n_webhook_optional",
+    "nextcloud_optional",
+    "home_assistant_notify_optional"
+  ],
+  "security_rules": [
+    "Do not reveal API keys or tokens.",
+    "Do not auto-publish generated content.",
+    "Use local Ollama by default.",
+    "Use cloud providers only if ALLOW_CLOUD_MODE is true.",
+    "Respect copyright, robots, platform terms and private data.",
+    "Mark all generated content as draft until reviewed by a human."
+  ],
+  "storage": {
+    "default_output_dir": "~/.openclaw_ultimate_user_data/content-multiplier/output",
+    "write_policy": "draft_outputs_only"
+  },
+  "review_required": true
+}
