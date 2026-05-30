@@ -49,3 +49,10 @@ geplante Module fuer das Ultimate KI Setup.
 - Zielsysteme: Codex, OpenClaw, Ollama, n8n, Whisper, Video-, Bild- und Shell-Workflows
 - Harte Regeln: Ressourcen vor jedem Start pruefen, Queue persistent halten, Logs pro Job schreiben
 - Leitstand: kleines lokales Webinterface fuer laufende, wartende und blockierte Auftraege
+
+### Queue_Job_Manager
+
+- Fokus: einfache script-first-Zentrale fuer das Setup-Menue und lokale Automationen
+- Speicher: lokale Job-JSON-Dateien und Logdateien unter `~/.ultimate-ki/queue-job-manager/`
+- Einstieg: `scripts/queue/submit_job.sh`, `run_worker.sh`, `status.sh`, `cancel_job.sh`
+- Ziel: zentrale FIFO-Steuerung mit Prioritaeten, Locking, Retry und Dry-Run ohne Cloud-Zwang

@@ -15,6 +15,16 @@ pnpm install
 pnpm build
 ```
 
+Oder direkt ueber das Setup-Skript:
+
+```bash
+scripts/setup.sh
+```
+
+Dabei wird, falls noch nicht vorhanden, auch eine lokale Beispiel-Konfiguration
+fuer den leichten `Queue_Job_Manager` unter
+`~/.ultimate-ki/queue-job-manager/queue.env` vorbereitet.
+
 ## Lokale Umgebung
 
 Die Beispielkonfiguration kopieren:
@@ -46,6 +56,7 @@ pnpm ai-content github https://github.com/openai/openai-cookbook
 - Ollama-Prompt-Starter: `workflows/ollama/content-multiplier.prompt.md`
 - KI-Queue-Tool: `tools/job_queue_manager/`
 - KI-Leitstand-Frontend: `tools/job_queue_manager/web/`
+- Zentrale Setup-Queue: `scripts/queue/`
 
 ## Hinweise
 
@@ -54,6 +65,7 @@ pnpm ai-content github https://github.com/openai/openai-cookbook
 - Bestehende Legacy-Integrationsordner bleiben aus Kompatibilitaetsgruenden erhalten
 - Social Publishing bleibt bewusst auf offizielle APIs und menschliche Freigabe beschraenkt
 - Der KI Job Queue Manager ist fuer stabilen lokalen Betrieb und Ressourcenschutz gedacht
+- Der leichte Queue_Job_Manager unter `scripts/queue/` ist fuer Setup-nahe FIFO-Steuerung gedacht
 
 ## Einordnung im Gesamtsetup
 
