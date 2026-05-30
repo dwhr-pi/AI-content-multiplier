@@ -1,0 +1,42 @@
+{
+  "name": "Niki_Your_Assistant_OpenClaw",
+  "display_name": "Niki Your Assistent",
+  "description": "Lokaler Geschaefts- und Umsetzungsassistent fuer das Ultimate-KI-Setup mit Kontext, Modul-Installationen und dokumentierter Arbeitsweise.",
+  "provider": "ollama",
+  "model": "llama3.2:latest",
+  "base_url": "http://127.0.0.1:11434",
+  "mode": "local_first",
+  "workflow_type": "assistant_foundation",
+  "inputs": [
+    "text",
+    "markdown",
+    "context_files",
+    "local_documents"
+  ],
+  "outputs": [
+    "markdown",
+    "json",
+    "plans",
+    "notes"
+  ],
+  "allowed_tools": [
+    "local_files",
+    "ollama",
+    "git_optional",
+    "shell_optional",
+    "n8n_optional",
+    "nextcloud_optional"
+  ],
+  "security_rules": [
+    "Do not reveal API keys or tokens.",
+    "Use local files and local models by default.",
+    "Treat generated outputs as draft until a human reviews them.",
+    "Do not assume Claude-specific commands are available.",
+    "Respect private business information and avoid unnecessary cloud dependencies."
+  ],
+  "storage": {
+    "default_output_dir": "~/.openclaw_ultimate_user_data/niki-your-assistant/output",
+    "write_policy": "draft_outputs_only"
+  },
+  "review_required": true
+}
