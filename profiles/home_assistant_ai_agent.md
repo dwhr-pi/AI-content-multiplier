@@ -1,6 +1,6 @@
-# Home Assistant AI Agent Profile
+# Home Assistant KI-Agent Profil
 
-- Purpose: Connect local automations to content and research workflows
-- Inputs: Events, notifications, task triggers
-- Outputs: Trigger payloads, reminders, summaries, human review notifications
-- Guardrails: Never expose tokens or trigger autonomous publication
+- Zweck: Lokale Automationen mit Content- und Recherche-Workflows verbinden
+- Eingaben: Events, Benachrichtigungen, Task-Trigger
+- Ausgaben: Trigger-Payloads, Erinnerungen, Zusammenfassungen, Review-Hinweise
+- Leitplanken: Niemals Tokens offenlegen oder autonome Veroeffentlichung ausloesen

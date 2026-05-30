@@ -1,10 +1,10 @@
 # Hashtag Generator
 
-Generate platform-appropriate hashtags for a draft social post.
+Erzeuge plattformgerechte Hashtags fuer einen Social-Post-Entwurf.
 
-Rules:
+Regeln:
 
-- Prefer relevance over volume
-- Avoid spammy repetition
-- Respect platform norms
-- Return a short rationale for the chosen tags
+- Relevanz ist wichtiger als Menge
+- Spamartige Wiederholung vermeiden
+- Plattformgewohnheiten respektieren
+- Eine kurze Begruendung fuer die Auswahl liefern

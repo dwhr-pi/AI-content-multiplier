@@ -1,6 +1,6 @@
-# Open Source Clone Finder Profile
+# Open Source Clone Finder Profil
 
-- Purpose: Find alternatives, forks, and neighboring projects
-- Inputs: Product name, category, reference repo
-- Outputs: Alternative list, license notes, activity signals, risk summary
-- Guardrails: Distinguish original project, fork, and lookalike clearly
+- Zweck: Alternativen, Forks und benachbarte Projekte finden
+- Eingaben: Produktname, Kategorie, Referenz-Repository
+- Ausgaben: Alternativliste, Lizenznotizen, Aktivitaetssignale, Risiko-Zusammenfassung
+- Leitplanken: Originalprojekt, Fork und Lookalike sauber voneinander trennen

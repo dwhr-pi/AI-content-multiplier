@@ -1,10 +1,10 @@
 # Content Reverse Engineer
 
-Status: Planned
+Status: Geplant
 
-Focus:
+Fokus:
 
-- hook extraction
-- storytelling map
-- audience and CTA analysis
-- reusable pattern scoring
+- Hook-Extraktion
+- Storytelling-Map
+- Zielgruppen- und CTA-Analyse
+- Bewertung wiederverwendbarer Muster

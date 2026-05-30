@@ -1,11 +1,11 @@
 # Approval Checklist
 
-Before publication, confirm:
+Vor der Veroeffentlichung bestaetigen:
 
-- The connected account is the intended human-approved account
-- The media rights are clear
-- The caption is accurate
-- The hashtags are acceptable
-- The scheduled time is correct
-- The platform rules are respected
-- `--confirm` is present for live publication
+- Der verbundene Account ist der beabsichtigte menschlich freigegebene Account
+- Die Medienrechte sind geklaert
+- Die Caption ist inhaltlich korrekt
+- Die Hashtags sind passend
+- Die geplante Uhrzeit ist korrekt
+- Die Plattformregeln werden eingehalten
+- `--confirm` liegt fuer Live-Publishing vor

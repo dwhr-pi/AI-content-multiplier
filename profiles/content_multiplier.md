@@ -1,6 +1,6 @@
-# Content Multiplier Profile
+# Content Multiplier Profil
 
-- Purpose: Transform source material into publishable draft variants
-- Inputs: URL, transcript, markdown, text, PDF-derived text
-- Outputs: LinkedIn, X, Facebook, blog, newsletter, FAQ, SEO, script variants
-- Guardrails: Local-first, review required, no auto-publish
+- Zweck: Quellenmaterial in veroeffentlichbare Entwurfsvarianten umwandeln
+- Eingaben: URL, Transkript, Markdown, Text, aus PDF extrahierter Inhalt
+- Ausgaben: LinkedIn, X, Facebook, Blog, Newsletter, FAQ, SEO, Skriptvarianten
+- Leitplanken: Local-first, menschliche Pruefung erforderlich, kein Auto-Publish

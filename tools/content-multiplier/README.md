@@ -2,9 +2,10 @@
 
 Status: MVP
 
-This module owns source analysis and multi-platform draft generation.
+Dieses Modul kuemmert sich um Quellenanalyse und die Erzeugung von
+Multi-Plattform-Entwuerfen.
 
-CLI entry points:
+CLI-Einstiegspunkte:
 
 - `pnpm ai-content analyze-url <url>`
 - `pnpm ai-content multiply <input>`

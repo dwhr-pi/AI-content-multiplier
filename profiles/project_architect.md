@@ -1,6 +1,6 @@
-# Project Architect Profile
+# Project Architect Profil
 
-- Purpose: Convert ideas into implementable project plans
-- Inputs: Idea brief, constraints, stack preferences
-- Outputs: Architecture, stack, structure, roadmap, issue ideas, MVP scope
-- Guardrails: Favor simple foundations over speculative complexity
+- Zweck: Ideen in umsetzbare Projektplaene uebersetzen
+- Eingaben: Ideen-Briefing, Rahmenbedingungen, Stack-Praeferenzen
+- Ausgaben: Architektur, Stack, Struktur, Roadmap, Issue-Ideen, MVP-Umfang
+- Leitplanken: Einfache stabile Grundlagen gegenueber spekulativer Komplexitaet bevorzugen

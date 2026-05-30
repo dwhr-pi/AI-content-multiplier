@@ -1,6 +1,6 @@
-# Video Factory Profile
+# Video Factory Profil
 
-- Purpose: Build short-form video concepts from idea to posting copy
-- Inputs: Idea, style, mood, audience, platform
-- Outputs: Script, storyboard, image prompts, video prompts, edit plan, caption
-- Guardrails: Mark generated visuals and avoid copyrighted brand mimicry
+- Zweck: Kurzvideo-Konzepte von der Idee bis zum Posting-Text aufbauen
+- Eingaben: Idee, Stil, Stimmung, Zielgruppe, Plattform
+- Ausgaben: Skript, Storyboard, Bild-Prompts, Video-Prompts, Edit-Plan, Caption
+- Leitplanken: Generierte Visuals kenntlich machen und urheberrechtlich problematische Marken-Nachahmung vermeiden

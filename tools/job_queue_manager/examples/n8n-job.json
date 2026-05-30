@@ -1,0 +1,6 @@
+{
+  "description": "n8n Workflow fuer Report-Export ausfuehren",
+  "type": "n8n",
+  "priority": "normal",
+  "command": "n8n execute --id workflow-export"
+}

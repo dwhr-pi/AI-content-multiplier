@@ -1,6 +1,6 @@
 # Self Learning Knowledge Base
 
-Status: Planned
+Status: Geplant
 
-This module will normalize notes, transcripts, and markdown into RAG-friendly
-local knowledge assets.
+Dieses Modul soll Notizen, Transkripte und Markdown in RAG-taugliche lokale
+Wissensbausteine normalisieren.

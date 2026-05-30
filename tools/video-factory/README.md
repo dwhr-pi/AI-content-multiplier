@@ -1,5 +1,6 @@
 # Video Factory
 
-Status: Planned
+Status: Geplant
 
-This module will turn ideas into storyboards, prompt chains, and posting copy.
+Dieses Modul soll Ideen in Storyboards, Prompt-Ketten und Posting-Texte
+ueberfuehren.

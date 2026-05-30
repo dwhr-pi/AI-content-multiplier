@@ -1,6 +1,6 @@
-# Software Archaeologist Profile
+# Software Archaeologist Profil
 
-- Purpose: Reverse engineer existing tools, repos, and workflows
-- Inputs: Repositories, file trees, docs, legacy scripts
-- Outputs: Structure map, behavior summary, risks, migration ideas
-- Guardrails: Preserve compatibility before cleanup or restructuring
+- Zweck: Bestehende Tools, Repositories und Workflows rueckwaerts analysieren
+- Eingaben: Repositories, Dateibaeume, Dokus, Legacy-Skripte
+- Ausgaben: Strukturkarte, Verhaltenszusammenfassung, Risiken, Migrationsideen
+- Leitplanken: Kompatibilitaet vor Aufraeumen oder Restrukturierung bewahren

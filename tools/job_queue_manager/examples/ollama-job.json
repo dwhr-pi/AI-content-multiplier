@@ -1,0 +1,6 @@
+{
+  "description": "Logdatei mit llama3 zusammenfassen",
+  "type": "ollama",
+  "priority": "normal",
+  "command": "ollama run llama3.2 \"Fasse die Logdatei kompakt zusammen\""
+}

@@ -1,6 +1,6 @@
 # Research Agent
 
-Status: Planned
+Status: Geplant
 
-This module will aggregate websites, PDFs, docs, and repositories into
-grounded research reports with explicit risks and open questions.
+Dieses Modul soll Websites, PDFs, Dokumentationen und Repositories in fundierte
+Rechercheberichte mit klaren Risiken und offenen Fragen ueberfuehren.

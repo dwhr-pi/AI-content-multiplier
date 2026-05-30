@@ -1,6 +1,6 @@
 # Workflow Exporter
 
-Status: Planned
+Status: Geplant
 
-This module will export reports and prompts into n8n, OpenClaw, Ollama,
-Home Assistant, Markdown, JSON, HTML, PDF, and DOCX targets.
+Dieses Modul soll Berichte und Prompts fuer n8n, OpenClaw, Ollama,
+Home Assistant, Markdown, JSON, HTML, PDF und DOCX exportieren.

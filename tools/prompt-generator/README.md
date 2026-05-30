@@ -2,6 +2,6 @@
 
 Status: MVP
 
-CLI entry point:
+CLI-Einstiegspunkt:
 
 - `pnpm ai-content prompt "<brief>"`

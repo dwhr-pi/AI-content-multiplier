@@ -1,5 +1,5 @@
 # Open Source Clone Finder
 
-Status: Planned
+Status: Geplant
 
-This module will search for alternatives, forks, and integration candidates.
+Dieses Modul soll Alternativen, Forks und Integrationskandidaten finden.

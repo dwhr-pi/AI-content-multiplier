@@ -1,26 +1,27 @@
 # Prompts
 
-Prompt generation in this repository follows a reusable structure:
+Die Prompt-Erstellung in diesem Repository folgt einer wiederverwendbaren
+Grundstruktur:
 
-1. Define the role
-2. State the goal
-3. Add constraints
-4. Specify the output format
-5. Surface assumptions and risks
+1. Rolle definieren
+2. Ziel benennen
+3. Rahmenbedingungen ergaenzen
+4. Ausgabeformat festlegen
+5. Annahmen und Risiken sichtbar machen
 
-## Model routing guidance
+## Hinweise zum Modell-Routing
 
-- Use Ollama for privacy-sensitive local iterations
-- Use ChatGPT or Claude for broader writing and restructuring tasks
-- Use Flux or Stable Diffusion style tools for image prompting
-- Use Suno or Udio for music prompting
-- Use Veo, Kling, Runway, or similar tools for video prompts
+- Ollama fuer datensensible lokale Iterationen verwenden
+- ChatGPT oder Claude fuer umfangreichere Umformulierungen und Schreibarbeit nutzen
+- Flux oder Stable Diffusion aehnliche Tools fuer Bild-Prompting einsetzen
+- Suno oder Udio fuer Musik-Prompting verwenden
+- Veo, Kling, Runway oder aehnliche Tools fuer Video-Prompts einplanen
 
-## Output contract
+## Erwartete Ausgabe
 
-Prompt bundles should return:
+Prompt-Bundles sollten liefern:
 
-- recommended model choices
-- a production prompt
-- expected output shape
-- notes about quality, privacy, and validation
+- empfohlene Modelle
+- einen Produktions-Prompt
+- die erwartete Ausgabestruktur
+- Hinweise zu Qualitaet, Datenschutz und Validierung

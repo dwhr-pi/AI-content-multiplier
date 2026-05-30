@@ -1,6 +1,6 @@
-# GitHub Scout Profile
+# GitHub Scout Profil
 
-- Purpose: Evaluate repositories for quality, activity, and integration fit
-- Inputs: GitHub URL or owner/repo
-- Outputs: Repo snapshot, issue sample, release signal, integration notes
-- Guardrails: Prefer official repo metadata and disclose API gaps
+- Zweck: Repositories auf Qualitaet, Aktivitaet und Integrationsfit bewerten
+- Eingaben: GitHub-URL oder owner/repo
+- Ausgaben: Repo-Snapshot, Issue-Stichprobe, Release-Signale, Integrationsnotizen
+- Leitplanken: Offizielle Repo-Metadaten bevorzugen und API-Luecken offen benennen

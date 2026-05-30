@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KI-Leitstand</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Ultimate KI Setup</p>
+          <h1>KI-Leitstand</h1>
+          <p class="subtitle">
+            Uebersicht ueber laufende, wartende und ressourcenblockierte Auftraege
+            des lokalen Queue Managers.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <button id="dispatchButton" class="button accent">Naechsten Slot pruefen</button>
+          <button id="pauseButton" class="button muted">Queue pausieren</button>
+          <button id="resumeButton" class="button muted">Queue fortsetzen</button>
+        </div>
+      </header>
+
+      <section class="metrics-grid">
+        <article class="panel system-panel">
+          <div class="panel-header">
+            <h2>Systemlast</h2>
+            <span id="lastUpdated" class="timestamp">Noch keine Daten</span>
+          </div>
+          <div id="systemMetrics" class="metric-list"></div>
+          <div id="systemReasons" class="reason-list"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Queue-Zustand</h2>
+            <span id="queueBadge" class="badge">Lade...</span>
+          </div>
+          <div id="statusCounters" class="counter-grid"></div>
+          <div id="configFacts" class="fact-list"></div>
+        </article>
+      </section>
+
+      <section class="board-grid">
+        <article class="panel lane">
+          <div class="panel-header">
+            <h2>Laeuft gerade</h2>
+            <span id="runningCount" class="badge neutral">0</span>
+          </div>
+          <div id="runningJobs" class="job-list empty-state">Keine laufenden Jobs.</div>
+        </article>
+
+        <article class="panel lane">
+          <div class="panel-header">
+            <h2>Blockiert durch Ressourcen</h2>
+            <span id="blockedCount" class="badge warning">0</span>
+          </div>
+          <div id="blockedJobs" class="job-list empty-state">Keine blockierten Jobs.</div>
+        </article>
+
+        <article class="panel lane">
+          <div class="panel-header">
+            <h2>Wartet</h2>
+            <span id="queuedCount" class="badge neutral">0</span>
+          </div>
+          <div id="queuedJobs" class="job-list empty-state">Keine wartenden Jobs.</div>
+        </article>
+
+        <article class="panel lane">
+          <div class="panel-header">
+            <h2>Pausiert</h2>
+            <span id="pausedCount" class="badge muted">0</span>
+          </div>
+          <div id="pausedJobs" class="job-list empty-state">Keine pausierten Jobs.</div>
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Zuletzt abgeschlossen</h2>
+          <span id="finishedCount" class="badge success">0</span>
+        </div>
+        <div id="finishedJobs" class="job-list empty-state">Noch keine abgeschlossenen Jobs.</div>
+      </section>
+
+      <aside class="panel log-panel">
+        <div class="panel-header">
+          <h2>Job-Details</h2>
+          <span id="logTitle" class="badge neutral">Kein Job gewaehlt</span>
+        </div>
+        <div id="logMeta" class="fact-list compact"></div>
+        <div class="log-columns">
+          <section>
+            <h3>Standard-Log</h3>
+            <pre id="stdoutLog" class="log-output">Bitte einen Job auswaehlen.</pre>
+          </section>
+          <section>
+            <h3>Fehler-Log</h3>
+            <pre id="stderrLog" class="log-output">Bitte einen Job auswaehlen.</pre>
+          </section>
+        </div>
+      </aside>
+    </div>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

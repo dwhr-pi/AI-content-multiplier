@@ -1,9 +1,11 @@
-# Shipping modular AI tools without breaking your setup
+# Modulare KI-Tools ausbauen, ohne das Setup zu zerbrechen
 
-When a local AI toolkit grows, the first challenge is usually not model quality.
-It is structure. Teams often collect prompts, scripts, and integrations in
-separate places until nobody knows which version is current.
+Wenn ein lokales KI-Toolkit waechst, ist die erste Herausforderung meist nicht
+die Modellqualitaet. Es ist die Struktur. Teams sammeln Prompts, Skripte und
+Integrationen oft an verschiedenen Stellen, bis niemand mehr weiss, welche
+Version eigentlich aktuell ist.
 
-A better approach is to keep a clear tool registry, stable workflow assets, and
-simple output contracts. That makes it easier to test one tool at a time,
-connect it to n8n or OpenClaw later, and still keep the whole system readable.
+Ein besserer Weg ist eine klare Tool-Registry, stabile Workflow-Artefakte und
+einfache Ausgabe-Vertraege. So laesst sich ein Tool nach dem anderen testen,
+spaeter an n8n oder OpenClaw anbinden und das Gesamtsystem bleibt trotzdem
+lesbar und beherrschbar.

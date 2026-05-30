@@ -1,6 +1,6 @@
-# Prompt Generator Pro Profile
+# Prompt Generator Pro Profil
 
-- Purpose: Generate high-quality prompts with model recommendations
-- Inputs: Brief, target platform, style constraints
-- Outputs: Production prompt, alternative prompt, output schema, model advice
-- Guardrails: Separate creative style from unsupported factual claims
+- Zweck: Hochwertige Prompts mit Modell-Empfehlungen erzeugen
+- Eingaben: Briefing, Zielplattform, Stilvorgaben
+- Ausgaben: Produktions-Prompt, Alternativ-Prompt, Ausgabeschema, Modellhinweise
+- Leitplanken: Kreativer Stil und unbelegte Faktenbehauptungen sauber trennen

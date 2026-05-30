@@ -1,29 +1,29 @@
 # Social Publisher
 
-Status: Planned foundation
+Status: Geplantes Grundgeruest
 
-`social-publisher` is a human-in-the-loop publishing module for official social
-platform APIs.
+`social-publisher` ist ein Human-in-the-loop-Modul fuer Publishing ueber
+offizielle Social-Platform-APIs.
 
-## Guardrails
+## Leitplanken
 
-- No fake-account or mass-account creation
-- No password storage
-- No cookie automation
-- No browser scraping for publishing
-- No posting without explicit human approval
-- Only officially connected accounts may be used
+- Keine Fake- oder Massenaccount-Erstellung
+- Keine Passwortspeicherung
+- Keine Cookie-Automation
+- Kein Browser-Scraping zum Posten
+- Kein Posting ohne explizite menschliche Freigabe
+- Nur offiziell verbundene Accounts duerfen genutzt werden
 
-## Initial target platforms
+## Erste Zielplattformen
 
-- Instagram Business / Creator via official Meta APIs
+- Instagram Business / Creator ueber offizielle Meta-APIs
 - Facebook Pages
 - LinkedIn
 - YouTube
 - X / Twitter
-- TikTok later
+- TikTok spaeter
 
-## Planned CLI shape
+## Geplante CLI-Form
 
 ```bash
 pnpm ai-content social connect instagram
@@ -33,25 +33,25 @@ pnpm ai-content social schedule instagram ./examples/output/post.md --time "2026
 pnpm ai-content social publish instagram ./examples/output/post.md --confirm
 ```
 
-## Module layout
+## Modulaufbau
 
-- `src/providers/` for official platform adapters
-- `src/auth/` for OAuth and secure token handling
-- `src/queue/` for scheduling and publish jobs
-- `src/moderation/` for safety, copyright, and policy checks
-- `prompts/` for caption and approval prompt templates
-- `examples/` for safe sample payloads
+- `src/providers/` fuer offizielle Plattform-Adapter
+- `src/auth/` fuer OAuth und sichere Token-Behandlung
+- `src/queue/` fuer Scheduling- und Publish-Jobs
+- `src/moderation/` fuer Sicherheits-, Copyright- und Policy-Checks
+- `prompts/` fuer Caption- und Freigabevorlagen
+- `examples/` fuer sichere Beispiel-Payloads
 
-## Safety model
+## Sicherheitsmodell
 
-The publishing workflow is intentionally designed as:
+Der Publishing-Workflow ist bewusst so aufgebaut:
 
 ```text
-Human creates account
-  -> Human authorizes OAuth
-  -> AI prepares draft
-  -> Safety checks run
-  -> Human confirms
-  -> Official API publishes or schedules
-  -> Result is logged
+Mensch erstellt Account
+  -> Mensch authorisiert OAuth
+  -> KI bereitet Entwurf vor
+  -> Sicherheitspruefungen laufen
+  -> Mensch bestaetigt
+  -> Offizielle API veroeffentlicht oder plant
+  -> Ergebnis wird geloggt
 ```

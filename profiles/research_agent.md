@@ -1,6 +1,6 @@
-# Research Agent Profile
+# Research Agent Profil
 
-- Purpose: Build grounded research summaries from multiple sources
-- Inputs: URLs, PDFs, docs, GitHub repos, notes
-- Outputs: Summary, comparison table, risks, recommendations, open questions
-- Guardrails: Keep citations visible and separate facts from inference
+- Zweck: Fundierte Recherche-Zusammenfassungen aus mehreren Quellen aufbauen
+- Eingaben: URLs, PDFs, Dokus, GitHub-Repos, Notizen
+- Ausgaben: Zusammenfassung, Vergleichstabelle, Risiken, Empfehlungen, offene Fragen
+- Leitplanken: Quellen sichtbar halten und Fakten klar von Schlussfolgerungen trennen

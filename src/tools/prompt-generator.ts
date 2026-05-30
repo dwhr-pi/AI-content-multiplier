@@ -5,29 +5,29 @@ interface ModelSuggestion {
   id: string;
   provider: string;
   bestFor: string;
-  cost: "low" | "medium" | "high";
+  cost: "niedrig" | "mittel" | "hoch";
 }
 
 const MODEL_MAP: Record<string, ModelSuggestion[]> = {
   text: [
-    { id: "gpt-4.1-mini", provider: "OpenAI", bestFor: "Fast structured writing", cost: "medium" },
-    { id: "claude-3-5-sonnet", provider: "Anthropic", bestFor: "Long-form drafting and reasoning", cost: "high" },
-    { id: "llama3.2:latest", provider: "Ollama", bestFor: "Local-first iteration", cost: "low" },
+    { id: "gpt-4.1-mini", provider: "OpenAI", bestFor: "Schnelles strukturiertes Schreiben", cost: "mittel" },
+    { id: "claude-3-5-sonnet", provider: "Anthropic", bestFor: "Laengere Entwuerfe und Begruendungen", cost: "hoch" },
+    { id: "llama3.2:latest", provider: "Ollama", bestFor: "Lokale Iteration", cost: "niedrig" },
   ],
   image: [
-    { id: "flux", provider: "Flux", bestFor: "Detailed image prompting", cost: "medium" },
-    { id: "stable-diffusion-xl", provider: "Stable Diffusion", bestFor: "Local image workflows", cost: "low" },
-    { id: "comfyui", provider: "ComfyUI", bestFor: "Node-based prompt pipelines", cost: "low" },
+    { id: "flux", provider: "Flux", bestFor: "Detailliertes Bild-Prompting", cost: "mittel" },
+    { id: "stable-diffusion-xl", provider: "Stable Diffusion", bestFor: "Lokale Bild-Workflows", cost: "niedrig" },
+    { id: "comfyui", provider: "ComfyUI", bestFor: "Node-basierte Prompt-Pipelines", cost: "niedrig" },
   ],
   music: [
-    { id: "suno", provider: "Suno", bestFor: "Lyrics-to-song workflows", cost: "medium" },
-    { id: "udio", provider: "Udio", bestFor: "Genre- and mood-rich song generation", cost: "medium" },
-    { id: "llama3.2:latest", provider: "Ollama", bestFor: "Local lyric and structure planning", cost: "low" },
+    { id: "suno", provider: "Suno", bestFor: "Lyrics-to-Song-Workflows", cost: "mittel" },
+    { id: "udio", provider: "Udio", bestFor: "Genre- und stimmungsreiche Song-Generierung", cost: "mittel" },
+    { id: "llama3.2:latest", provider: "Ollama", bestFor: "Lokale Text- und Strukturplanung", cost: "niedrig" },
   ],
   video: [
-    { id: "veo", provider: "Google", bestFor: "Cinematic video prompting", cost: "high" },
-    { id: "kling", provider: "Kling", bestFor: "Short-form motion prompts", cost: "high" },
-    { id: "runway", provider: "Runway", bestFor: "Storyboard-to-video refinement", cost: "high" },
+    { id: "veo", provider: "Google", bestFor: "Cineastisches Video-Prompting", cost: "hoch" },
+    { id: "kling", provider: "Kling", bestFor: "Kurzformatige Motion-Prompts", cost: "hoch" },
+    { id: "runway", provider: "Runway", bestFor: "Verfeinerung von Storyboard zu Video", cost: "hoch" },
   ],
 };
 
@@ -57,23 +57,23 @@ function renderPromptBundle(
 ): Record<string, unknown> {
   const baseGoal = trimWords(brief, 32);
   const prompt = [
-    `Role: Senior AI production assistant for ${target}.`,
-    `Goal: ${baseGoal}`,
-    `Requirements:`,
-    `- Preserve the main intent and target audience.`,
-    `- Produce a clean first draft plus one stronger alternative.`,
-    `- Surface assumptions, missing data, and risk notes explicitly.`,
-    `- Return the result in a reusable markdown structure.`,
+    `Rolle: Senior-KI-Produktionsassistenz fuer ${target}.`,
+    `Ziel: ${baseGoal}`,
+    `Anforderungen:`,
+    `- Die Hauptintention und Zielgruppe erhalten.`,
+    `- Einen sauberen Erstentwurf plus eine staerkere Alternative liefern.`,
+    `- Annahmen, fehlende Daten und Risikohinweise explizit nennen.`,
+    `- Das Ergebnis in einer wiederverwendbaren Markdown-Struktur zurueckgeben.`,
   ].join("\n");
 
   const outputFormat =
     family === "video"
-      ? "Sections: concept, storyboard, shot list, visual prompts, motion prompts, publish copy."
+      ? "Abschnitte: Konzept, Storyboard, Shot-Liste, Bild-Prompts, Motion-Prompts, Posting-Text."
       : family === "music"
-        ? "Sections: concept, lyrics, sonic references, arrangement notes, cover prompt, social teaser."
+        ? "Abschnitte: Konzept, Songtext, Klangreferenzen, Arrangement-Notizen, Cover-Prompt, Social-Teaser."
         : family === "image"
-          ? "Sections: concept, image prompt, negative prompt, style modifiers, export settings."
-          : "Sections: context, system prompt, user prompt, checklist, alternative version.";
+          ? "Abschnitte: Konzept, Bild-Prompt, Negativ-Prompt, Stilmodifikatoren, Export-Einstellungen."
+          : "Abschnitte: Kontext, System-Prompt, User-Prompt, Checkliste, Alternativversion.";
 
   return {
     family,
@@ -82,9 +82,9 @@ function renderPromptBundle(
     prompt,
     outputFormat,
     notes: [
-      "Use Ollama when privacy matters more than polish.",
-      "Use a cloud model only when you intentionally provide the API key.",
-      "Validate factual claims before shipping the final artifact.",
+      "Ollama verwenden, wenn Datenschutz wichtiger ist als maximale Ausarbeitung.",
+      "Ein Cloud-Modell nur nutzen, wenn der API-Key bewusst hinterlegt wurde.",
+      "Faktische Aussagen vor der finalen Nutzung validieren.",
     ],
   };
 }
@@ -94,26 +94,26 @@ function renderMarkdown(result: Record<string, unknown>): string {
   const notes = result.notes as string[];
 
   return [
-    `# Prompt Generator Report`,
+    `# Prompt-Generator-Bericht`,
     ``,
-    `- Target: ${result.target as string}`,
-    `- Family: ${result.family as string}`,
+    `- Ziel: ${result.target as string}`,
+    `- Familie: ${result.family as string}`,
     ``,
-    `## Recommended models`,
+    `## Empfohlene Modelle`,
     ...recommendations.map(
       (model) =>
-        `- ${model.id} (${model.provider}) - ${model.bestFor} - cost: ${model.cost}`,
+        `- ${model.id} (${model.provider}) - ${model.bestFor} - Kosten: ${model.cost}`,
     ),
     ``,
-    `## Production prompt`,
+    `## Produktions-Prompt`,
     "```text",
     result.prompt as string,
     "```",
     ``,
-    `## Expected output format`,
+    `## Erwartetes Ausgabeformat`,
     result.outputFormat as string,
     ``,
-    `## Notes`,
+    `## Hinweise`,
     ...notes.map((note) => `- ${note}`),
   ].join("\n");
 }
@@ -125,10 +125,10 @@ export async function runPromptGenerator(
 ): Promise<CliCommandResult> {
   const brief = args.positional.join(" ").trim() || getFlagString(args.flags, "brief");
   if (!brief) {
-    throw new Error("Missing prompt brief. Pass a short creative or technical request.");
+    throw new Error("Prompt-Beschreibung fehlt. Bitte eine kurze kreative oder technische Anfrage angeben.");
   }
 
-  const target = getFlagString(args.flags, "target", "general");
+  const target = getFlagString(args.flags, "target", "allgemein");
   const family = detectFamily(brief);
   const recommendations = MODEL_MAP[family];
   const data = renderPromptBundle(brief, family, target, recommendations);

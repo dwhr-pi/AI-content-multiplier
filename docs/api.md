@@ -1,43 +1,48 @@
 # API
 
-The current public interface is the CLI.
+Die aktuelle oeffentliche Schnittstelle des Projekts ist die CLI.
 
-## Commands
+## Befehle
 
 ### `ai-content list`
 
-Lists all registered tools and their commands.
+Listet alle registrierten Tools und ihre Befehle auf.
 
 ### `ai-content doctor`
 
-Prints a small environment and tool status report.
+Druckt einen kompakten Bericht zu Umgebung und Tool-Status.
 
 ### `ai-content analyze-url <url>`
 
-Creates a lightweight analysis from a fetched URL snapshot.
+Erstellt eine kompakte Analyse aus einem geladenen URL-Snapshot.
 
 ### `ai-content multiply <input>`
 
-Reads a text string or file and generates a structured content report.
+Liest eine Datei oder einen Text ein und erzeugt einen strukturierten Content-Bericht.
 
 ### `ai-content prompt "<brief>"`
 
-Generates a prompt package and model recommendations.
+Erzeugt ein Prompt-Paket inklusive Modell-Empfehlungen.
 
 ### `ai-content github <owner/repo|url>`
 
-Queries the GitHub API for repository metadata and summarizes it.
+Fragt die GitHub-API nach Repository-Metadaten ab und fasst sie zusammen.
 
 ### `ai-content social`
 
-Returns the planned roadmap for the future social publishing command family.
+Zeigt die geplante Roadmap fuer die kuenftige Social-Publishing-Befehlsfamilie.
 
-## Output formats
+### `ai-content queue-manager`
+
+Zeigt die geplante Roadmap fuer den lokalen KI Job Queue Manager.
+
+## Ausgabeformate
 
 - `--output markdown`
 - `--output json`
 
-## Future API direction
+## Zukuenftige Richtung
 
-The workflow exporter will later emit stable JSON payloads for n8n, OpenClaw,
-Ollama, Home Assistant, social publishing, HTML, PDF, and DOCX-oriented pipelines.
+Der Workflow-Exporter soll spaeter stabile JSON-Payloads fuer n8n, OpenClaw,
+Ollama, Home Assistant, Social Publishing, HTML, PDF, DOCX und den
+KI-Job-Queue-Manager liefern.

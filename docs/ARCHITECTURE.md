@@ -1,43 +1,63 @@
-# Architecture
+# Architektur
 
-AI Content Multiplier uses a CLI-first, local-first architecture with a modular
-registry that can grow from prompt-driven MVPs into richer adapters and
-automation flows.
+AI Content Multiplier folgt einer CLI-first- und local-first-Architektur mit
+einer modularen Registry. Aus einfachen MVPs koennen so spaeter umfassendere
+Adapter, Automationen und Systemdienste entstehen.
 
-## Core layers
+## Rolle neben dem Ultimate KI Setup
+
+Diese Sammlung ist als eigenstaendige Erweiterung neben dem Ultimate KI Setup
+gedacht. Sie uebernimmt nicht die Rolle des grossen Basis-Setups, sondern
+liefert zusaetzliche, in sich geschlossene Werkzeuge fuer konkrete Aufgaben.
+
+Das bedeutet:
+
+- Das Ultimate KI Setup bleibt der uebergeordnete Rahmen fuer Integrationen,
+  Betriebslogik und grosse Orchestrierung.
+- AI Content Multiplier dient als modulare Werkzeug-Sammlung mit kleineren,
+  kompletten Helfern, die genau dafuer entwickelt werden, das Gesamtsetup
+  sinnvoll zu ergaenzen.
+- Die Tools in diesem Repository sind bewusst Teil derselben Sammlung und nicht
+  nur Verweise auf andere fremde oder ausgelagerte GitHub-Repositories.
+- Die Sammlung wird aktiv gepflegt, damit sie sich parallel zum Ultimate KI
+  Setup weiterentwickeln kann.
+
+## Kernschichten
 
 ```text
-Inputs
-  URL / Text / Markdown / PDF / Transcript / Repo URL
+Eingaenge
+  URL / Text / Markdown / PDF / Transkript / Repo-URL
       |
       v
-CLI Router
+CLI-Router
   src/cli.ts
       |
       v
-Tool Registry
+Tool-Registry
   src/registry/tool-registry.ts
       |
       v
-Tool Modules
-  content-multiplier / prompt-generator / github-scout / planned tools
+Tool-Module
+  content-multiplier / prompt-generator / github-scout / job-queue / weitere Module
       |
       v
-Outputs
-  Markdown / JSON / Workflow assets / Local reports
+Ausgaben
+  Markdown / JSON / Workflow-Artefakte / lokale Reports
 ```
 
-## Design principles
+## Gestaltungsprinzipien
 
-- Local-first by default with Ollama as the primary model target
-- Simple, inspectable CLI workflows before background automation
-- Tool isolation so each module can evolve independently
-- Markdown and JSON as the default portable output formats
-- Optional integrations through config and environment variables
+- Local-first als Standard, mit Ollama als primaerem Modellziel
+- Einfache, nachvollziehbare CLI-Workflows vor komplexer Hintergrundautomatisierung
+- Klare Modulgrenzen, damit Tools unabhaengig voneinander wachsen koennen
+- Markdown und JSON als portable Standardausgaben
+- Optionale Integrationen ueber Konfiguration und ENV-Dateien
+- Ressourcenschutz als zentrales Prinzip fuer lokale KI-Prozesse
 
-## Planned evolution
+## Geplante Weiterentwicklung
 
-1. Replace heuristic generation with model adapters
-2. Add workflow exporter and knowledge-base persistence
-3. Add Firecrawl, PDF, and transcript ingestion adapters
-4. Add RAG-ready storage and retrieval workflows
+1. Heuristische Platzhalter durch echte Modelladapter ersetzen
+2. Workflow-Exporter und persistente Wissensbasis erweitern
+3. Firecrawl-, PDF- und Transkript-Adapter ausbauen
+4. RAG-taugliche Speicher- und Abrufpfade ergaenzen
+5. Einen lokalen KI-Job-Queue-Manager fuer kontrollierte Abarbeitung integrieren

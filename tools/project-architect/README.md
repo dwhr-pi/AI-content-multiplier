@@ -1,6 +1,6 @@
 # Project Architect
 
-Status: Planned
+Status: Geplant
 
-This module will convert a raw idea into architecture, stack guidance,
-folder structure, roadmap, and issue-ready implementation slices.
+Dieses Modul soll eine Rohidee in Architektur, Stack-Empfehlungen,
+Ordnerstruktur, Roadmap und issue-faehige Umsetzungspakete uebersetzen.

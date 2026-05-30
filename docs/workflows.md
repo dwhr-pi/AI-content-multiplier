@@ -1,50 +1,62 @@
 # Workflows
 
-The repository keeps workflow assets in canonical subdirectories under
+Das Repository haelt Workflow-Artefakte in kanonischen Unterordnern unter
 `workflows/`.
 
-## Canonical locations
+## Kanonische Orte
 
 - `workflows/n8n/`
 - `workflows/openclaw/`
 - `workflows/ollama/`
 
-Current examples include content multiplication and social publishing blueprints.
+Aktuelle Beispiele decken Content-Multiplication- und Social-Publishing-Blueprints ab.
 
-## Compatibility note
+## Kompatibilitaetshinweis
 
-Existing top-level folders remain in place:
+Bestehende Top-Level-Ordner bleiben erhalten:
 
 - `n8n/`
 - `openclaw/`
 - `nextcloud/`
 - `home-assistant/`
 
-They are kept so older Ultimate Setup integrations do not break while the new
-tool collection structure is introduced.
+Sie bleiben bewusst bestehen, damit vorhandene Ultimate-KI-Setup-Integrationen
+nicht brechen, waehrend die neue Tool-Sammlung eingefuehrt wird.
 
-## Typical flow
+## Typischer Ablauf
 
 ```text
-Source
-  -> analyze
-  -> enrich
-  -> draft outputs
-  -> human review
-  -> export
-  -> automation handoff
+Quelle
+  -> analysieren
+  -> anreichern
+  -> Entwuerfe erzeugen
+  -> menschliche Pruefung
+  -> exportieren
+  -> an Automation uebergeben
 ```
 
-## Social publishing flow
+## Social-Publishing-Ablauf
 
 ```text
-Input idea
+Input-Idee
   -> Content Multiplier
   -> Prompt Generator
-  -> Media preparation
-  -> Policy checks
-  -> Posting draft
-  -> Human approval
-  -> Official API publishing
-  -> Logging and analytics
+  -> Medien vorbereiten
+  -> Richtlinien pruefen
+  -> Posting-Entwurf
+  -> menschliche Freigabe
+  -> offizielles API-Publishing
+  -> Logging und Auswertung
+```
+
+## Queue-Manager-Ablauf
+
+```text
+Auftrag annehmen
+  -> persistieren
+  -> Prioritaet auswerten
+  -> CPU/RAM/GPU/Speicher pruefen
+  -> Job starten oder warten lassen
+  -> Logs schreiben
+  -> Status aktualisieren
 ```

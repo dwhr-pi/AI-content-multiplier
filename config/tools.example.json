@@ -16,6 +16,11 @@
     "requiresHumanApproval": true,
     "officialApisOnly": true
   },
+  "ki-job-queue-manager": {
+    "status": "planned",
+    "persistence": "jsonl",
+    "resourceProtection": true
+  },
   "reverse-engineer": {
     "status": "planned"
   },

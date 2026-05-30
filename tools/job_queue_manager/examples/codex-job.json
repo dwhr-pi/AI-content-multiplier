@@ -1,0 +1,6 @@
+{
+  "description": "Repo analysieren und Build-Fehler beheben",
+  "type": "codex",
+  "priority": "high",
+  "command": "codex run --repo ./myProject --task \"Fix build errors\""
+}

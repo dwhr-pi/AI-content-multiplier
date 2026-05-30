@@ -1,6 +1,6 @@
-# Content Reverse Engineer Profile
+# Content Reverse Engineer Profil
 
-- Purpose: Deconstruct successful content into reusable patterns
-- Inputs: Transcript, post text, reel script, article
-- Outputs: Hook analysis, CTA map, emotion map, repeatable content blueprint
-- Guardrails: Respect copyright and do not clone protected assets verbatim
+- Zweck: Erfolgreiche Inhalte in wiederverwendbare Muster zerlegen
+- Eingaben: Transkript, Post-Text, Reel-Skript, Artikel
+- Ausgaben: Hook-Analyse, CTA-Map, Emotions-Map, wiederholbarer Content-Bauplan
+- Leitplanken: Urheberrechte respektieren und keine geschuetzten Assets womoeglich wortgleich kopieren

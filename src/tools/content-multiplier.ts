@@ -45,16 +45,16 @@ async function fetchUrlSnapshot(url: string): Promise<string> {
     return normalizeWhitespace(
       [
         `URL: ${url}`,
-        title ? `Title: ${title}` : "",
-        description ? `Description: ${description}` : "",
-        headings.length > 0 ? `Headings: ${headings.join(" | ")}` : "",
+        title ? `Titel: ${title}` : "",
+        description ? `Beschreibung: ${description}` : "",
+        headings.length > 0 ? `Ueberschriften: ${headings.join(" | ")}` : "",
       ]
         .filter(Boolean)
         .join("\n"),
     );
   } catch (error) {
-    const message = error instanceof Error ? error.message : "unknown fetch error";
-    return `URL: ${url}\nFetch note: ${message}`;
+    const message = error instanceof Error ? error.message : "unbekannter Abruffehler";
+    return `URL: ${url}\nAbrufhinweis: ${message}`;
   } finally {
     clearTimeout(timeout);
   }
@@ -64,67 +64,67 @@ function detectAudience(text: string): string {
   const lowered = text.toLowerCase();
 
   if (/(developer|api|github|cli|typescript|automation)/.test(lowered)) {
-    return "Builders, developers, and technical operators";
+    return "Builder, Entwickler und technische Operatoren";
   }
 
   if (/(marketing|brand|audience|campaign|seo|content)/.test(lowered)) {
-    return "Marketing teams, creators, and growth-focused operators";
+    return "Marketing-Teams, Creator und wachstumsorientierte Operatoren";
   }
 
   if (/(music|video|reel|shorts|storyboard)/.test(lowered)) {
-    return "Creative teams producing short-form media";
+    return "Kreative Teams fuer Kurzvideo- und Medienproduktion";
   }
 
-  return "Operators who need a clear summary and reusable next steps";
+  return "Operatoren, die eine klare Zusammenfassung und wiederverwendbare naechste Schritte benoetigen";
 }
 
 function detectTone(text: string): string {
   const lowered = text.toLowerCase();
 
   if (/(urgent|now|immediately|critical|must)/.test(lowered)) {
-    return "Direct and action-oriented";
+    return "Direkt und handlungsorientiert";
   }
 
   if (/(research|evidence|study|analysis|report)/.test(lowered)) {
-    return "Analytical and insight-driven";
+    return "Analytisch und erkenntnisorientiert";
   }
 
   if (/(story|creator|brand|community|audience)/.test(lowered)) {
-    return "Conversational and persuasive";
+    return "Nahbar und ueberzeugend";
   }
 
-  return "Clear, practical, and informative";
+  return "Klar, praktisch und informativ";
 }
 
 function detectHooks(title: string, summary: string, keywords: string[]): string[] {
   return uniqueStrings([
-    `What most teams miss about ${keywords[0] ?? "this topic"}`,
-    `A faster way to turn ${keywords[1] ?? "raw material"} into publishable assets`,
-    `${title} in one practical breakdown`,
-    `The short path from source material to reusable content`,
+    `Was die meisten Teams bei ${keywords[0] ?? "diesem Thema"} uebersehen`,
+    `Ein schnellerer Weg von ${keywords[1] ?? "Rohmaterial"} zu veroeffentlichbaren Assets`,
+    `${title} in einer praktischen Einordnung`,
+    `Der kurze Weg von der Quelle zum wiederverwendbaren Content`,
     trimWords(summary, 12),
   ]).slice(0, 4);
 }
 
 function detectCallToAction(keywords: string[]): string {
-  const primary = keywords[0] ?? "your workflow";
-  return `Review the draft, validate the facts, and adapt ${primary} into your next publish-ready asset.`;
+  const primary = keywords[0] ?? "deinen Workflow";
+  return `Pruefe den Entwurf, validiere die Fakten und ueberfuehre ${primary} in dein naechstes veroefentlichungsreifes Asset.`;
 }
 
 function detectRisks(text: string): string[] {
   const lowered = text.toLowerCase();
   const risks = [
-    "Validate claims, dates, and named entities before publishing.",
-    "Review copyright and platform usage rights for source material.",
-    "Keep auto-publishing disabled until a human approves the final copy.",
+    "Aussagen, Daten und genannte Entitaeten vor der Nutzung pruefen.",
+    "Urheberrecht und Plattformnutzungsrechte der Quelle pruefen.",
+    "Automatisches Publishing deaktiviert lassen, bis ein Mensch final freigibt.",
   ];
 
   if (/(health|medical|legal|finance|security)/.test(lowered)) {
-    risks.unshift("This topic may require expert review because it can affect high-stakes decisions.");
+    risks.unshift("Dieses Thema kann fachliche Pruefung benoetigen, weil es folgenreiche Entscheidungen beeinflussen kann.");
   }
 
   if (/(personal data|customer data|private|confidential)/.test(lowered)) {
-    risks.unshift("Remove or anonymize sensitive data before exporting drafts.");
+    risks.unshift("Sensible Daten vor dem Export von Entwuerfen entfernen oder anonymisieren.");
   }
 
   return uniqueStrings(risks);
@@ -166,32 +166,32 @@ function buildOutputs(analysis: ContentAnalysis): Record<string, unknown> {
   const secondHook = analysis.hooks[1] ?? analysis.shortSummary;
 
   return {
-    linkedinPost: `${hook}\n\n${analysis.summary}\n\nKey takeaways:\n- ${points.join("\n- ")}\n\n${analysis.callToAction}`,
+    linkedinPost: `${hook}\n\n${analysis.summary}\n\nWichtigste Punkte:\n- ${points.join("\n- ")}\n\n${analysis.callToAction}`,
     xThread: [
       `${hook}`,
       `${secondHook}`,
       ...points.map((point, index) => `${index + 3}. ${point}`),
-      `Final note: ${analysis.callToAction}`,
+      `Zum Abschluss: ${analysis.callToAction}`,
     ],
-    facebookPost: `${analysis.summary}\n\nWhat stands out:\n- ${points.join("\n- ")}\n\n${analysis.callToAction}`,
-    blogArticle: `# ${analysis.title}\n\n## Why it matters\n${analysis.summary}\n\n## Key points\n- ${points.join("\n- ")}\n\n## Practical angle\nThis topic fits ${analysis.audience.toLowerCase()} and works best with a ${analysis.tone.toLowerCase()} voice.\n\n## Next step\n${analysis.callToAction}`,
-    newsletter: `Subject: ${hook}\n\nHi team,\n\n${analysis.longSummary}\n\nHighlights:\n- ${points.join("\n- ")}\n\n${analysis.callToAction}`,
+    facebookPost: `${analysis.summary}\n\nWas besonders auffaellt:\n- ${points.join("\n- ")}\n\n${analysis.callToAction}`,
+    blogArticle: `# ${analysis.title}\n\n## Warum das wichtig ist\n${analysis.summary}\n\n## Kernpunkte\n- ${points.join("\n- ")}\n\n## Praktischer Blickwinkel\nDieses Thema passt fuer ${analysis.audience.toLowerCase()} und wirkt am besten mit einer ${analysis.tone.toLowerCase()}en Stimme.\n\n## Naechster Schritt\n${analysis.callToAction}`,
+    newsletter: `Betreff: ${hook}\n\nHallo zusammen,\n\n${analysis.longSummary}\n\nHighlights:\n- ${points.join("\n- ")}\n\n${analysis.callToAction}`,
     faq: [
       {
-        question: "What is the main idea?",
+        question: "Was ist die Hauptidee?",
         answer: analysis.shortSummary,
       },
       {
-        question: "Who is this for?",
+        question: "Fuer wen ist das gedacht?",
         answer: analysis.audience,
       },
       {
-        question: "What should happen next?",
+        question: "Was sollte als Naechstes passieren?",
         answer: analysis.callToAction,
       },
     ],
     seoKeywords: analysis.seoKeywords,
-    youtubeScript: `Hook: ${hook}\n\nIntro:\n${analysis.shortSummary}\n\nBody:\n- ${points.join("\n- ")}\n\nOutro:\n${analysis.callToAction}`,
+    youtubeScript: `Hook: ${hook}\n\nIntro:\n${analysis.shortSummary}\n\nHauptteil:\n- ${points.join("\n- ")}\n\nOutro:\n${analysis.callToAction}`,
     instagramCaption: `${hook}\n\n${analysis.shortSummary}\n\n#${analysis.seoKeywords.slice(0, 5).join(" #")}`,
     shortSummary: analysis.shortSummary,
     longSummary: analysis.longSummary,
@@ -205,39 +205,39 @@ function renderMarkdown(result: Record<string, unknown>): string {
   const faq = outputs.faq as Array<{ question: string; answer: string }>;
 
   return [
-    `# Content Multiplier Report`,
+    `# Content-Multiplier-Bericht`,
     ``,
-    `## Source`,
-    `- Input: ${(result.sourceLabel as string) ?? "unknown"}`,
-    `- Source type: ${(result.sourceType as string) ?? "unknown"}`,
-    `- Generated: ${(result.generatedAt as string) ?? ""}`,
+    `## Quelle`,
+    `- Eingabe: ${(result.sourceLabel as string) ?? "unbekannt"}`,
+    `- Quelltyp: ${(result.sourceType as string) ?? "unbekannt"}`,
+    `- Erzeugt am: ${(result.generatedAt as string) ?? ""}`,
     ``,
-    `## Analysis`,
-    `- Title: ${analysis.title}`,
-    `- Audience: ${analysis.audience}`,
-    `- Tone: ${analysis.tone}`,
-    `- Summary: ${analysis.summary}`,
+    `## Analyse`,
+    `- Titel: ${analysis.title}`,
+    `- Zielgruppe: ${analysis.audience}`,
+    `- Ton: ${analysis.tone}`,
+    `- Zusammenfassung: ${analysis.summary}`,
     ``,
-    `### Key points`,
+    `### Kernpunkte`,
     ...analysis.keyPoints.map((point) => `- ${point}`),
     ``,
     `### Hooks`,
     ...analysis.hooks.map((hook) => `- ${hook}`),
     ``,
-    `### Risks`,
+    `### Risiken`,
     ...analysis.risks.map((risk) => `- ${risk}`),
     ``,
-    `### SEO keywords`,
+    `### SEO-Keywords`,
     analysis.seoKeywords.join(", "),
     ``,
-    `## Draft outputs`,
-    `### LinkedIn post`,
+    `## Entwurfs-Ausgaben`,
+    `### LinkedIn-Post`,
     outputs.linkedinPost as string,
     ``,
-    `### X thread`,
+    `### X-Thread`,
     ...thread.map((line) => `- ${line}`),
     ``,
-    `### Blog article`,
+    `### Blogartikel`,
     outputs.blogArticle as string,
     ``,
     `### Newsletter`,
@@ -246,10 +246,10 @@ function renderMarkdown(result: Record<string, unknown>): string {
     `### FAQ`,
     ...faq.map((item) => `- ${item.question} ${item.answer}`),
     ``,
-    `### YouTube script`,
+    `### YouTube-Skript`,
     outputs.youtubeScript as string,
     ``,
-    `### Instagram caption`,
+    `### Instagram-Caption`,
     outputs.instagramCaption as string,
   ].join("\n");
 }
@@ -261,7 +261,7 @@ export async function runContentMultiplier(
 ): Promise<CliCommandResult> {
   const firstInput = args.positional[0] ?? getFlagString(args.flags, "input");
   if (!firstInput) {
-    throw new Error("Missing input. Use a file path, raw text, or URL.");
+    throw new Error("Eingabe fehlt. Bitte Dateipfad, Rohtext oder URL angeben.");
   }
 
   let sourceType = "text";

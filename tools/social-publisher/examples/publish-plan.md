@@ -1,19 +1,19 @@
 # Publish Plan
 
-## Flow
+## Ablauf
 
-1. Human connects the account with OAuth
-2. Content Multiplier prepares draft copy
-3. Prompt Generator expands caption and hashtag variants
-4. Video Factory or other media tools prepare assets
-5. `social-publisher` runs safety, copyright, and policy checks
-6. Human approves
-7. Official API schedules or publishes
-8. Queue log is saved
+1. Mensch verbindet den Account per OAuth
+2. Content Multiplier bereitet den Entwurf vor
+3. Prompt Generator erweitert Caption- und Hashtag-Varianten
+4. Video Factory oder andere Medien-Tools erstellen Assets
+5. `social-publisher` fuehrt Sicherheits-, Copyright- und Policy-Checks aus
+6. Mensch gibt frei
+7. Offizielle API plant oder veroeffentlicht
+8. Queue- oder Publish-Log wird gespeichert
 
-## Notes
+## Hinweise
 
-- No password-based login
-- No cookie scraping
-- No fake-account creation
-- No automatic publication without explicit confirmation
+- Kein passwortbasierter Login
+- Kein Cookie-Scraping
+- Keine Fake-Account-Erstellung
+- Keine automatische Veroeffentlichung ohne explizite Bestaetigung

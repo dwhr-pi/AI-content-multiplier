@@ -53,7 +53,7 @@ async function githubRequest<T>(
   }
 
   if (!response.ok) {
-    throw new Error(`GitHub request failed with status ${response.status}`);
+    throw new Error(`GitHub-Anfrage ist mit Status ${response.status} fehlgeschlagen`);
   }
 
   return (await response.json()) as T;
@@ -80,23 +80,23 @@ function buildIntegrationNotes(
   const topics = (repo.topics ?? []).map((topic) => topic.toLowerCase());
 
   if (names.includes("package.json") || names.includes("pnpm-lock.yaml")) {
-    notes.push("Strong JavaScript or TypeScript integration potential.");
+    notes.push("Starkes Integrationspotenzial fuer JavaScript- oder TypeScript-Umgebungen.");
   }
 
   if (names.includes("docker-compose.yml") || names.includes("dockerfile")) {
-    notes.push("Can likely be packaged into local or server-side automation flows.");
+    notes.push("Laesst sich voraussichtlich gut in lokale oder serverseitige Automationsablaeufe einbinden.");
   }
 
   if (topics.some((topic) => ["api", "sdk", "cli", "automation", "agent"].includes(topic))) {
-    notes.push("Repository topics suggest direct automation or agent integration.");
+    notes.push("Die Repository-Themen deuten auf direkte Automation oder Agenten-Integration hin.");
   }
 
   if (names.includes(".github")) {
-    notes.push("Has GitHub automation metadata that may help CI or release workflows.");
+    notes.push("Enthaelt GitHub-Automationsmetadaten, die fuer CI oder Releases hilfreich sein koennen.");
   }
 
   if (notes.length === 0) {
-    notes.push("Integration potential is moderate; more detail will come from deeper code inspection.");
+    notes.push("Das Integrationspotenzial wirkt solide, benoetigt aber tiefere Codepruefung fuer mehr Sicherheit.");
   }
 
   return notes;
@@ -111,45 +111,45 @@ function renderMarkdown(data: Record<string, unknown>): string {
   const notes = data.integrationPotential as string[];
 
   return [
-    `# GitHub Scout Report`,
+    `# GitHub-Scout-Bericht`,
     ``,
     `## Repository`,
     `- Name: ${repo.full_name}`,
     `- URL: ${repo.html_url}`,
-    `- Description: ${repo.description ?? "No description"}`,
-    `- Language: ${repo.language ?? "Unknown"}`,
+    `- Beschreibung: ${repo.description ?? "Keine Beschreibung"}`,
+    `- Sprache: ${repo.language ?? "Unbekannt"}`,
     `- Stars: ${repo.stargazers_count}`,
     `- Forks: ${repo.forks_count}`,
-    `- Open issues: ${repo.open_issues_count}`,
-    `- Archived: ${repo.archived ? "yes" : "no"}`,
-    `- License: ${repo.license?.spdx_id ?? repo.license?.name ?? "Unknown"}`,
-    `- Updated: ${repo.updated_at}`,
+    `- Offene Issues: ${repo.open_issues_count}`,
+    `- Archiviert: ${repo.archived ? "ja" : "nein"}`,
+    `- Lizenz: ${repo.license?.spdx_id ?? repo.license?.name ?? "Unbekannt"}`,
+    `- Aktualisiert: ${repo.updated_at}`,
     ``,
-    `## README headings`,
-    ...(headings.length > 0 ? headings.map((heading) => `- ${heading}`) : ["- README headings not available"]),
+    `## README-Ueberschriften`,
+    ...(headings.length > 0 ? headings.map((heading) => `- ${heading}`) : ["- Keine README-Ueberschriften verfuegbar"]),
     ``,
-    `## Root structure`,
-    ...(contents.length > 0 ? contents.map((entry) => `- ${entry}`) : ["- Root contents not available"]),
+    `## Root-Struktur`,
+    ...(contents.length > 0 ? contents.map((entry) => `- ${entry}`) : ["- Kein Root-Inhalt verfuegbar"]),
     ``,
     `## Releases`,
     ...(releases.length > 0
       ? releases.map((release) => `- ${release.name} (${release.publishedAt})`)
-      : ["- No release data available"]),
+      : ["- Keine Release-Daten verfuegbar"]),
     ``,
-    `## Open issues snapshot`,
-    ...(issues.length > 0 ? issues.map((issue) => `- ${issue.title} - ${issue.url}`) : ["- No open issues sampled"]),
+    `## Stichprobe offener Issues`,
+    ...(issues.length > 0 ? issues.map((issue) => `- ${issue.title} - ${issue.url}`) : ["- Keine offenen Issues in der Stichprobe"]),
     ``,
-    `## Integration potential`,
+    `## Integrationspotenzial`,
     ...notes.map((note) => `- ${note}`),
     ``,
-    `## Summary table`,
+    `## Uebersichtstabelle`,
     markdownTable(
-      ["Signal", "Value"],
+      ["Signal", "Wert"],
       [
-        ["Default branch", repo.default_branch],
-        ["Last push", repo.pushed_at],
-        ["Topics", (repo.topics ?? []).join(", ") || "None"],
-        ["Top root entries", contents.slice(0, 5).join(", ") || "n/a"],
+        ["Standard-Branch", repo.default_branch],
+        ["Letzter Push", repo.pushed_at],
+        ["Themen", (repo.topics ?? []).join(", ") || "Keine"],
+        ["Top-Root-Eintraege", contents.slice(0, 5).join(", ") || "k. A."],
       ],
     ),
   ].join("\n");
@@ -162,7 +162,7 @@ export async function runGitHubScout(
 ): Promise<CliCommandResult> {
   const target = args.positional[0];
   if (!target) {
-    throw new Error("Missing repository reference. Use owner/repo or a GitHub URL.");
+    throw new Error("Repository-Referenz fehlt. Bitte owner/repo oder eine GitHub-URL angeben.");
   }
 
   const { owner, repo } = parseRepoReference(target);
@@ -170,7 +170,7 @@ export async function runGitHubScout(
 
   const repository = await githubRequest<GitHubRepo>(`/repos/${owner}/${repo}`, token);
   if (!repository) {
-    throw new Error(`Repository not found: ${owner}/${repo}`);
+    throw new Error(`Repository nicht gefunden: ${owner}/${repo}`);
   }
 
   const [contents, issues, releases, readmeResponse] = await Promise.all([
@@ -189,7 +189,7 @@ export async function runGitHubScout(
   const rootContents = (contents ?? []).slice(0, 12).map((item) => item.name);
   const releaseSummary = (releases ?? []).map((release) => ({
     name: release.name ?? release.tag_name,
-    publishedAt: release.published_at ?? "unknown",
+    publishedAt: release.published_at ?? "unbekannt",
   }));
   const integrationPotential = buildIntegrationNotes(repository, contents ?? []);
 

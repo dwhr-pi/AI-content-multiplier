@@ -5,7 +5,7 @@
   "media": {
     "image": "./output/instagram-post.jpg"
   },
-  "caption": "A practical local-first workflow for turning source material into reusable content drafts.",
+  "caption": "Ein praktischer Local-first-Workflow, um Quellenmaterial in wiederverwendbare Content-Entwuerfe zu verwandeln.",
   "hashtags": ["#ai", "#content", "#automation"],
   "schedule_at": "2026-06-01T18:00:00+02:00",
   "requires_approval": true

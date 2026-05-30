@@ -1,0 +1,6 @@
+{
+  "description": "OpenClaw-Agent fuer Repoanalyse starten",
+  "type": "openclaw",
+  "priority": "high",
+  "command": "openclaw run --agent repo-analyse"
+}

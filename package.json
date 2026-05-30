@@ -1,7 +1,7 @@
 {
   "name": "ai-content-multiplier",
   "version": "0.1.0",
-  "description": "Local-first modular content analysis and transformation toolkit.",
+  "description": "Lokale, modulare Tool-Sammlung fuer Analyse, Vervielfaeltigung und Umwandlung von Inhalten.",
   "type": "module",
   "private": false,
   "packageManager": "pnpm@10.12.1",
@@ -19,7 +19,7 @@
     "ai-content": "tsx src/cli.ts",
     "test-tools": "tsx src/cli.ts doctor",
     "demo:content": "tsx src/cli.ts multiply examples/input/sample-source.md",
-    "demo:prompt": "tsx src/cli.ts prompt \"Create a cinematic Celtic trance music video\"",
+    "demo:prompt": "tsx src/cli.ts prompt \"Erstelle ein cineastisches Celtic-Trance-Musikvideo\"",
     "demo:github": "tsx src/cli.ts github https://github.com/openai/openai-cookbook"
   },
   "devDependencies": {

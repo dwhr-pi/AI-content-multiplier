@@ -8,14 +8,14 @@ function renderRegistry(): string {
   const lines = [
     "# AI Content Multiplier CLI",
     "",
-    "## Available tools",
+    "## Verfuegbare Tools",
   ];
 
   for (const tool of toolRegistry) {
     lines.push(`- ${tool.name} [${tool.status}] - ${tool.summary}`);
     for (const command of tool.commands) {
-      lines.push(`  command: ${command.name} - ${command.summary}`);
-      lines.push(`  example: ${command.example}`);
+      lines.push(`  befehl: ${command.name} - ${command.summary}`);
+      lines.push(`  beispiel: ${command.example}`);
     }
   }
 
@@ -26,15 +26,15 @@ function renderHelp(): string {
   return [
     renderRegistry(),
     "",
-    "## Core commands",
+    "## Zentrale Befehle",
     "- pnpm ai-content list",
     "- pnpm ai-content doctor",
     "- pnpm ai-content analyze-url https://example.com",
     "- pnpm ai-content multiply examples/input/sample-source.md",
     "- pnpm ai-content github https://github.com/example/repo",
-    "- pnpm ai-content prompt \"Create a Celtic trance music video\"",
+    "- pnpm ai-content prompt \"Erstelle ein Celtic-Trance-Musikvideo\"",
     "",
-    "Use --output json to get structured machine-readable output.",
+    "Mit --output json wird eine maschinenlesbare Ausgabe erzeugt.",
   ].join("\n");
 }
 
@@ -50,12 +50,12 @@ function renderDoctor(): CliCommandResult {
         .map((tool) => tool.id),
     },
     markdown: [
-      "# AI Content Multiplier Doctor",
+      "# AI Content Multiplier Diagnose",
       "",
       `- Node.js: ${process.version}`,
-      `- Working directory: ${process.cwd()}`,
-      `- Tool count: ${toolRegistry.length}`,
-      `- Implemented MVPs: ${toolRegistry.filter((tool) => tool.status === "mvp").map((tool) => tool.id).join(", ")}`,
+      `- Arbeitsverzeichnis: ${process.cwd()}`,
+      `- Anzahl Tools: ${toolRegistry.length}`,
+      `- Implementierte MVPs: ${toolRegistry.filter((tool) => tool.status === "mvp").map((tool) => tool.id).join(", ")}`,
     ].join("\n"),
   };
 }
@@ -93,11 +93,11 @@ async function main(): Promise<void> {
 
   const tool = findToolForCommand(command);
   if (!tool) {
-    throw new Error(`Unknown command: ${command}`);
+    throw new Error(`Unbekannter Befehl: ${command}`);
   }
 
   if (!tool.run) {
-    const roadmap = tool.roadmap?.map((item) => `- ${item}`).join("\n") ?? "- Implementation planned";
+    const roadmap = tool.roadmap?.map((item) => `- ${item}`).join("\n") ?? "- Implementierung geplant";
     process.stdout.write(
       [
         `# ${tool.name}`,
@@ -125,6 +125,6 @@ async function main(): Promise<void> {
 
 main().catch((error) => {
   const message = error instanceof Error ? error.message : String(error);
-  process.stderr.write(`Error: ${message}\n`);
+  process.stderr.write(`Fehler: ${message}\n`);
   process.exitCode = 1;
 });

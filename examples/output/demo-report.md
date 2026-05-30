@@ -1,39 +1,39 @@
-# Demo Report
+# Demo-Bericht
 
-This example shows the intended shape of a first-pass content multiplier report.
+Dieses Beispiel zeigt die angestrebte Form eines ersten Content-Multiplier-Berichts.
 
-## Source
+## Quelle
 
-- Input: `examples/input/sample-source.md`
-- Source type: `file`
+- Eingabe: `examples/input/sample-source.md`
+- Quelltyp: `file`
 
-## Analysis
+## Analyse
 
-- Title: Shipping modular AI tools without breaking your setup
-- Audience: Builders, developers, and technical operators
-- Tone: Clear, practical, and informative
-- Summary: When a local AI toolkit grows, the first challenge is usually not model quality. It is structure. Teams often collect prompts, scripts, and integrations in separate places until nobody knows which version is current. A better approach is to keep a clear tool registry, stable workflow assets, and simple output contracts...
+- Titel: Modulare KI-Tools ausbauen, ohne das Setup zu zerbrechen
+- Zielgruppe: Builder, Entwickler und technische Operatoren
+- Ton: Klar, praktisch und informativ
+- Zusammenfassung: Wenn ein lokales KI-Toolkit waechst, ist die erste Herausforderung meist nicht die Modellqualitaet. Es ist die Struktur. Teams sammeln Prompts, Skripte und Integrationen oft an verschiedenen Stellen, bis niemand mehr weiss, welche Version aktuell ist. Ein besserer Weg ist eine klare Tool-Registry, stabile Workflow-Artefakte und einfache Ausgabe-Vertraege...
 
-## Example outputs
+## Beispiel-Ausgaben
 
-### LinkedIn post
+### LinkedIn-Post
 
-What most teams miss about modular workflows
+Was die meisten Teams bei modularen Workflows uebersehen
 
-When a local AI toolkit grows, the first challenge is usually not model quality.
-It is structure. A clean registry and stable workflow assets make the whole
-system easier to scale and easier to trust.
+Wenn ein lokales KI-Toolkit waechst, ist die erste Herausforderung meist nicht
+die Modellqualitaet. Es ist die Struktur. Eine saubere Registry und stabile
+Workflow-Artefakte machen das gesamte System skalierbarer und vertrauenswuerdiger.
 
-Key takeaways:
+Wichtigste Punkte:
 
-- Keep tools modular
-- Preserve compatibility while restructuring
-- Use stable output contracts for automation
+- Tools modular halten
+- Kompatibilitaet waehrend Umbauten erhalten
+- Stabile Ausgabeformate fuer Automationen nutzen
 
-Review the draft, validate the facts, and adapt modular into your next
-publish-ready asset.
+Pruefe den Entwurf, validiere die Fakten und ueberfuehre modular in dein
+naechstes veroefentlichungsreifes Asset.
 
-### SEO keywords
+### SEO-Keywords
 
 - modular
 - workflow
@@ -41,7 +41,7 @@ publish-ready asset.
 - automation
 - content
 
-### Notes
+### Hinweise
 
-- Final outputs should be reviewed by a human
-- URLs, PDFs, and API-backed sources can later enrich the same report format
+- Finale Ausgaben sollten von einem Menschen geprueft werden
+- URLs, PDFs und API-gestuetzte Quellen koennen spaeter denselben Berichtstyp anreichern

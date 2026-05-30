@@ -1,12 +1,12 @@
 # Reel Description
 
-Create a reel description package with:
+Erzeuge ein Reel-Beschreibungspaket mit:
 
-- hook
-- caption
-- hashtag set
+- Hook
+- Caption
+- Hashtag-Set
 - CTA
-- cover text suggestion
-- review notes
+- Cover-Text-Vorschlag
+- Review-Hinweisen
 
-Assume the result is a draft that still needs human approval.
+Gehe davon aus, dass das Ergebnis ein Entwurf ist und noch menschliche Freigabe benoetigt.

@@ -1,60 +1,83 @@
 # AI Content Multiplier
 
-AI Content Multiplier is a local-first, modular tool collection for analyzing,
-reconstructing, transforming, and exporting content for multiple platforms.
+AI Content Multiplier ist eine lokale, modulare Open-Source-Tool-Sammlung fuer
+das Ultimate KI Setup. Das Projekt soll Inhalte analysieren, vervielfaeltigen,
+rekonstruieren, umwandeln und fuer verschiedene Plattformen ausgeben.
 
-The repository is designed as a building block for an "Ultimate KI Setup" with
-strong support for Ollama, OpenClaw, n8n, Firecrawl, GitHub, Nextcloud, and
-Home Assistant.
+Der Schwerpunkt liegt auf einem stabilen, erweiterbaren und integrationsfaehigen
+Werkzeugkasten mit starker Anbindung an Ollama, OpenClaw, n8n, Firecrawl,
+GitHub, Nextcloud und Home Assistant.
 
-## What is included
+## Warum dieses Repository eigenstaendig existiert
 
-- A TypeScript CLI for local workflows
-- A modular tool registry with implemented and planned tools
-- MVPs for `content-multiplier`, `prompt-generator`, and `github-scout`
-- OpenClaw, n8n, and Ollama workflow assets
-- Reusable profiles for content, research, reverse engineering, and planning
-- Example inputs, outputs, reports, and integration configs
+Diese Tool-Sammlung existiert bewusst eigenstaendig neben dem Ultimate KI
+Setup. Sie ist keine Konkurrenz dazu, sondern sinnvolles Zubehoer und eine
+aktive Erweiterung fuer das gesamte Setup.
 
-## Current tool status
+Der Unterschied ist wichtig:
 
-| Tool | Status | Purpose |
+- Das Ultimate KI Setup bildet den grossen Rahmen mit seinen Kern-Tools,
+  Integrationen und uebergreifenden Workflows.
+- Dieses Repository sammelt dagegen bewusst kleine, komplette und klar
+  abgegrenzte Werkzeuge, die das Gesamtsetup praktisch erweitern.
+- Hier liegen keine ausgelagerten Fremd-Repositories oder blossen GitHub-Links,
+  sondern eigene, direkt gepflegte Tools innerhalb einer gemeinsamen Sammlung.
+- Die Sammlung wird aktiv weiterentwickelt, damit neue Bausteine schnell,
+  modular und ohne unnoetige Repo-Zersplitterung ergaenzt werden koennen.
+
+Kurz gesagt: Das Ultimate KI Setup ist die uebergeordnete Plattform. Dieses
+Projekt ist das passende Werkzeugregal daneben.
+
+## Was bereits enthalten ist
+
+- Eine TypeScript-CLI fuer lokale Workflows
+- Eine modulare Tool-Registry mit aktiven und geplanten Modulen
+- MVPs fuer `content-multiplier`, `prompt-generator` und `github-scout`
+- Workflow-Artefakte fuer OpenClaw, n8n und Ollama
+- Wiederverwendbare Profile fuer Content, Recherche, Reverse Engineering und Planung
+- Beispiel-Eingaben, Ausgaben, Reports und Konfigurationsvorlagen
+
+## Aktueller Tool-Status
+
+| Tool | Status | Zweck |
 |---|---|---|
-| Content Multiplier | MVP | Turns source material into multi-platform draft outputs |
-| Prompt Generator Pro | MVP | Builds prompts plus model recommendations |
-| GitHub Scout | MVP | Analyzes GitHub repositories and integration potential |
-| Content Reverse Engineer | Planned | Breaks down viral hooks, CTA patterns, and storytelling |
-| AI Research Agent | Planned | Creates summaries, comparisons, and source-backed reports |
-| Open Source Clone Finder | Planned | Finds alternatives, forks, and clone ecosystems |
-| Project Architect | Planned | Converts ideas into architecture, roadmap, and MVP plans |
-| Video Factory | Planned | Generates scripts, storyboards, prompt chains, and shot plans |
-| Social Publisher | Planned | Prepares human-approved publishing drafts for official social APIs |
-| Self Learning Knowledge Base | Planned | Stores knowledge and prepares RAG-friendly assets |
-| Workflow Exporter | Planned | Exports results to automation and document formats |
+| Content Multiplier | MVP | Wandelt Quellen in mehrere Content-Entwuerfe fuer verschiedene Plattformen um |
+| Prompt Generator Pro | MVP | Erzeugt Prompt-Pakete mit Modell-Empfehlungen |
+| GitHub Scout | MVP | Analysiert GitHub-Repositories und bewertet Integrationspotenzial |
+| Content Reverse Engineer | Geplant | Zerlegt erfolgreiche Inhalte in Hooks, Storytelling- und CTA-Muster |
+| AI Research Agent | Geplant | Erstellt Zusammenfassungen, Vergleiche und quellenbasierte Berichte |
+| Open Source Clone Finder | Geplant | Findet Alternativen, Forks und Open-Source-Nachbarschaften |
+| Project Architect | Geplant | Uebersetzt Ideen in Architektur, Roadmap und MVP-Plan |
+| Video Factory | Geplant | Erzeugt Storyboards, Prompt-Ketten und Produktionsplaene |
+| Social Publisher | Geplant | Bereitet human-approved Posting-Entwuerfe fuer offizielle Social-APIs vor |
+| KI Job Queue Manager | Geplant | Kontrolliert lokale KI-Auftraege und schuetzt vor CPU-, RAM- und GPU-Ueberlastung |
+| Self Learning Knowledge Base | Geplant | Speichert Wissen fuer spaetere RAG-Workflows |
+| Workflow Exporter | Geplant | Exportiert Ergebnisse in Automationen und Dokumentformate |
 
-## Project layout
+## Projektstruktur
 
 ```text
 AI-content-multiplier/
-├─ config/
-├─ docs/
-├─ examples/
-├─ profiles/
-├─ scripts/
-├─ src/
-├─ tools/
-├─ workflows/
-├─ .env.example
-├─ package.json
-├─ README.md
-└─ tsconfig.json
+|- config/
+|- docs/
+|- examples/
+|- profiles/
+|- scripts/
+|- src/
+|- tools/
+|- workflows/
+|- .env.example
+|- package.json
+|- README.md
+`- tsconfig.json
 ```
 
-The repository also keeps legacy top-level folders such as `openclaw/`,
-`n8n/`, `nextcloud/`, and `home-assistant/` for compatibility with the
-existing setup. The new canonical workflow assets live in `workflows/`.
+Das Repository behaelt ausserdem die bestehenden Top-Level-Ordner wie
+`openclaw/`, `n8n/`, `nextcloud/` und `home-assistant/`, damit vorhandene
+Integrationen nicht brechen. Die neue kanonische Struktur lebt zusaetzlich in
+`workflows/` und `tools/`.
 
-## Quick start
+## Schnellstart
 
 ```bash
 pnpm install
@@ -64,11 +87,11 @@ pnpm ai-content list
 pnpm ai-content analyze-url "https://example.com"
 pnpm ai-content multiply examples/input/sample-source.md
 pnpm ai-content github https://github.com/openai/openai-cookbook
-pnpm ai-content prompt "Create a Celtic trance music video"
+pnpm ai-content prompt "Erstelle ein Celtic-Trance-Musikvideo"
 pnpm ai-content social
 ```
 
-## CLI commands
+## CLI-Befehle
 
 ```bash
 pnpm ai-content list
@@ -81,52 +104,53 @@ pnpm ai-content prompt "Erstelle ein Musikvideo im Celtic Trance Stil"
 pnpm ai-content social
 ```
 
-## Local-first defaults
+## Local-first-Standards
 
-- Ollama is the default model route
-- Cloud APIs stay optional through environment variables
-- Generated content is treated as draft output
-- Auto-publishing is disabled by default
-- Secrets must never be committed
+- Ollama ist der Standardpfad fuer lokale Modellaufrufe
+- Cloud-APIs bleiben optional und werden nur ueber ENV aktiviert
+- Generierte Inhalte gelten immer zuerst als Entwurf
+- Automatisches Veroeffentlichen ist standardmaessig deaktiviert
+- Secrets duerfen niemals committed werden
 
-## Integrations
+## Integrationen
 
-- Ollama for local text generation
-- OpenClaw for agent orchestration
-- n8n for workflow automation
-- Firecrawl for URL extraction
-- GitHub for repository intelligence
-- Official social APIs for human-approved publishing workflows
-- Nextcloud/myNextcloud for file storage
-- Home Assistant for local notifications and triggers
+- Ollama fuer lokale Text- und Prompt-Verarbeitung
+- OpenClaw fuer Agenten-Orchestrierung
+- n8n fuer Workflow-Automatisierung
+- Firecrawl fuer URL-Extraktion
+- GitHub fuer Repository-Analysen
+- Offizielle Social-APIs fuer human-approved Publishing
+- KI-Leitstand fuer lokale Queue-, Status- und Ressourcen-Uebersicht
+- Nextcloud/myNextcloud fuer Dateiablage
+- Home Assistant fuer lokale Trigger und Benachrichtigungen
 
-## Documentation
+## Dokumentation
 
-- [Architecture](docs/architecture.md)
+- [Architektur](docs/architecture.md)
 - [Tools](docs/tools.md)
 - [Workflows](docs/workflows.md)
 - [Prompts](docs/prompts.md)
 - [API](docs/api.md)
 - [Setup](docs/setup.md)
 
-Legacy integration notes remain available in:
+Bestehende Integrationsnotizen bleiben weiterhin verfuegbar:
 
-- [Legacy architecture](docs/ARCHITECTURE.md)
-- [Legacy workflow](docs/WORKFLOW.md)
-- [Ultimate setup integration](docs/ULTIMATE_KI_SETUP_INTEGRATION.md)
+- [Legacy-Architektur](docs/ARCHITECTURE.md)
+- [Legacy-Workflow](docs/WORKFLOW.md)
+- [Ultimate-KI-Setup-Integration](docs/ULTIMATE_KI_SETUP_INTEGRATION.md)
 
-## Safety
+## Sicherheit
 
-- Do not commit API keys, tokens, or personal data
-- Review generated content before publication
-- Respect copyright, licensing, and platform terms
-- Use cloud models only after explicit local configuration
-- Never automate fake-account creation, password login, or cookie-based posting
+- Keine API-Keys, Tokens oder personenbezogenen Daten committen
+- Generierte Inhalte vor jeder Nutzung oder Veroeffentlichung pruefen
+- Urheberrecht, Lizenzen und Plattformregeln einhalten
+- Cloud-Modelle nur nach bewusster lokaler Konfiguration verwenden
+- Keine Fake-Account-Automation, Passwort-Logins oder Cookie-basiertes Posting
 
 ## Roadmap
 
-1. Stabilize the CLI MVPs
-2. Add real Ollama and Firecrawl adapters
-3. Extend workflow export targets
-4. Add knowledge-base, research, and social publishing modules
-5. Expand automation templates for n8n and OpenClaw
+1. Die bestehenden CLI-MVPs weiter stabilisieren
+2. Echte Adapter fuer Ollama, Firecrawl und Exporte ergaenzen
+3. Wissensbasis, Recherche und Social Publishing ausbauen
+4. Den KI Job Queue Manager fuer kontrollierte Auftragssteuerung integrieren
+5. Weitere Automationsvorlagen fuer n8n und OpenClaw liefern
