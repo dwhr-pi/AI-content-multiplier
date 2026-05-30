@@ -54,5 +54,6 @@ geplante Module fuer das Ultimate KI Setup.
 
 - Fokus: einfache script-first-Zentrale fuer das Setup-Menue und lokale Automationen
 - Speicher: lokale Job-JSON-Dateien und Logdateien unter `~/.ultimate-ki/queue-job-manager/`
-- Einstieg: `scripts/queue/submit_job.sh`, `run_worker.sh`, `status.sh`, `cancel_job.sh`
+- Einstieg: `scripts/queue/menu.sh`, `submit_job.sh`, `run_worker.sh`, `status.sh`, `list_jobs.sh`, `logs.sh`, `cancel_job.sh`
 - Ziel: zentrale FIFO-Steuerung mit Prioritaeten, Locking, Retry und Dry-Run ohne Cloud-Zwang
+- Schutz: lokale Ressourcenpruefung fuer CPU, RAM, GPU und freien Speicherplatz vor schweren Starts

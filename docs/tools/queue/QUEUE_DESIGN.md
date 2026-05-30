@@ -126,9 +126,12 @@ Beispiel:
 
 Empfohlene Verknuepfung:
 
+- `scripts/queue/menu.sh`
 - `scripts/queue/status.sh`
+- `scripts/queue/list_jobs.sh`
 - `scripts/queue/submit_job.sh`
 - `scripts/queue/run_worker.sh`
+- `scripts/queue/logs.sh`
 - `scripts/queue/cancel_job.sh`
 
 ## Beziehung zum TypeScript-Queue-Manager
@@ -147,3 +150,17 @@ Beide koennen nebeneinander existieren:
 
 - `scripts/queue/` als einfache zentrale Queue fuer das Setup
 - `tools/job_queue_manager/` als ausbaubares Tool mit CLI und Leitstand
+
+## Aktueller Stand
+
+Der aktuelle einfache Stand enthaelt bereits:
+
+- FIFO je Prioritaetsstufe
+- Prioritaeten `low`, `normal`, `high`, `critical`
+- Ressourcenklassen `light`, `medium`, `heavy`, `gpu`
+- Lockfile gegen doppelte Worker
+- Retry-Limit pro Job
+- Dry-Run
+- `list`- und `logs`-Ansicht
+- ein kleines interaktives Menue
+- lokale Ressourcenpruefung fuer CPU, RAM, GPU und freien Speicherplatz

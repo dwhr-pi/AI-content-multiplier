@@ -2,9 +2,11 @@
 from __future__ import annotations
 
 import argparse
+import ctypes
 import json
 import os
 import shlex
+import shutil
 import signal
 import subprocess
 import sys
@@ -13,7 +15,7 @@ import uuid
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional
+from typing import Dict, Iterable, List, Optional, Tuple
 
 
 PRIORITY_ORDER = {
@@ -25,6 +27,14 @@ PRIORITY_ORDER = {
 RESOURCE_CLASSES = {"light", "medium", "heavy", "gpu"}
 FINAL_STATUSES = {"success", "failed", "cancelled"}
 PENDING_STATUSES = {"queued", "waiting_resources"}
+VISIBLE_STATUSES = [
+    "queued",
+    "waiting_resources",
+    "running",
+    "success",
+    "failed",
+    "cancelled",
+]
 
 
 def utc_now() -> str:
@@ -34,7 +44,8 @@ def utc_now() -> str:
 def parse_env_file(path: Path) -> Dict[str, str]:
     data: Dict[str, str] = {}
     if not path.exists():
-      return data
+        return data
+
     for raw_line in path.read_text(encoding="utf-8").splitlines():
         line = raw_line.strip()
         if not line or line.startswith("#"):
@@ -58,6 +69,15 @@ def is_pid_alive(pid: Optional[int]) -> bool:
         return False
 
 
+def tail_text(path: Path, max_lines: int) -> str:
+    if not path.exists():
+        return "(leer)"
+    lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    if not lines:
+        return "(leer)"
+    return "\n".join(lines[-max_lines:])
+
+
 @dataclass
 class QueuePaths:
     base_dir: Path
@@ -66,6 +86,16 @@ class QueuePaths:
     logs_dir: Path
     run_dir: Path
     lock_file: Path
+
+
+@dataclass
+class ResourceSnapshot:
+    cpu_percent: Optional[float]
+    ram_percent: Optional[float]
+    gpu_percent: Optional[float]
+    free_disk_gb: float
+    allowed: bool
+    reasons: List[str]
 
 
 class QueueRuntime:
@@ -81,32 +111,30 @@ class QueueRuntime:
             "QUEUE_DEFAULT_RETRY_LIMIT": "1",
             "QUEUE_POLL_INTERVAL_SECONDS": "5",
             "QUEUE_LOG_TAIL_LINES": "80",
+            "QUEUE_MAX_CPU_PERCENT": "85",
+            "QUEUE_MAX_RAM_PERCENT": "85",
+            "QUEUE_MAX_GPU_PERCENT": "90",
+            "QUEUE_MIN_FREE_DISK_GB": "5",
         }
 
         env_config = dict(self.defaults)
         env_config.update({key: value for key, value in os.environ.items() if key.startswith("QUEUE_")})
 
-        self.paths = QueuePaths(
-            base_dir=Path(env_config["QUEUE_BASE_DIR"]).expanduser(),
-            config_file=Path(env_config["QUEUE_BASE_DIR"]).expanduser() / "queue.env",
-            jobs_dir=Path(env_config["QUEUE_BASE_DIR"]).expanduser() / "jobs",
-            logs_dir=Path(env_config["QUEUE_BASE_DIR"]).expanduser() / "logs",
-            run_dir=Path(env_config["QUEUE_BASE_DIR"]).expanduser() / "run",
-            lock_file=Path(env_config["QUEUE_BASE_DIR"]).expanduser() / "run" / "worker.lock",
-        )
-
-        file_config = parse_env_file(self.paths.config_file)
+        provisional_base = Path(env_config["QUEUE_BASE_DIR"]).expanduser()
+        provisional_config = provisional_base / "queue.env"
+        file_config = parse_env_file(provisional_config)
         env_config.update(file_config)
         env_config.update({key: value for key, value in os.environ.items() if key.startswith("QUEUE_")})
         self.config = env_config
 
+        base_dir = Path(self.config["QUEUE_BASE_DIR"]).expanduser()
         self.paths = QueuePaths(
-            base_dir=Path(self.config["QUEUE_BASE_DIR"]).expanduser(),
-            config_file=Path(self.config["QUEUE_BASE_DIR"]).expanduser() / "queue.env",
-            jobs_dir=Path(self.config["QUEUE_BASE_DIR"]).expanduser() / "jobs",
-            logs_dir=Path(self.config["QUEUE_BASE_DIR"]).expanduser() / "logs",
-            run_dir=Path(self.config["QUEUE_BASE_DIR"]).expanduser() / "run",
-            lock_file=Path(self.config["QUEUE_BASE_DIR"]).expanduser() / "run" / "worker.lock",
+            base_dir=base_dir,
+            config_file=base_dir / "queue.env",
+            jobs_dir=base_dir / "jobs",
+            logs_dir=base_dir / "logs",
+            run_dir=base_dir / "run",
+            lock_file=base_dir / "run" / "worker.lock",
         )
 
     def ensure(self) -> None:
@@ -117,6 +145,9 @@ class QueueRuntime:
 
     def get_int(self, key: str) -> int:
         return int(self.config[key])
+
+    def get_float(self, key: str) -> float:
+        return float(self.config[key])
 
     def class_limit(self, resource_class: str) -> int:
         mapping = {
@@ -237,9 +268,135 @@ class WorkerLock:
                 pass
 
 
+def _cpu_percent_posix() -> Optional[float]:
+    if not hasattr(os, "getloadavg"):
+        return None
+    try:
+        load1, _, _ = os.getloadavg()
+    except OSError:
+        return None
+    cpu_count = os.cpu_count() or 1
+    return max(0.0, min(100.0, (load1 / cpu_count) * 100.0))
+
+
+def _ram_percent_linux() -> Optional[float]:
+    meminfo = Path("/proc/meminfo")
+    if not meminfo.exists():
+        return None
+    values: Dict[str, int] = {}
+    for line in meminfo.read_text(encoding="utf-8").splitlines():
+        if ":" not in line:
+            continue
+        key, rest = line.split(":", 1)
+        parts = rest.strip().split()
+        if not parts:
+            continue
+        try:
+            values[key] = int(parts[0])
+        except ValueError:
+            continue
+    total = values.get("MemTotal")
+    available = values.get("MemAvailable")
+    if not total or not available:
+        return None
+    used = total - available
+    return max(0.0, min(100.0, (used / total) * 100.0))
+
+
+def _ram_percent_windows() -> Optional[float]:
+    if os.name != "nt":
+        return None
+
+    class MemoryStatus(ctypes.Structure):
+        _fields_ = [
+            ("dwLength", ctypes.c_ulong),
+            ("dwMemoryLoad", ctypes.c_ulong),
+            ("ullTotalPhys", ctypes.c_ulonglong),
+            ("ullAvailPhys", ctypes.c_ulonglong),
+            ("ullTotalPageFile", ctypes.c_ulonglong),
+            ("ullAvailPageFile", ctypes.c_ulonglong),
+            ("ullTotalVirtual", ctypes.c_ulonglong),
+            ("ullAvailVirtual", ctypes.c_ulonglong),
+            ("sullAvailExtendedVirtual", ctypes.c_ulonglong),
+        ]
+
+    status = MemoryStatus()
+    status.dwLength = ctypes.sizeof(MemoryStatus)
+    if not ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(status)):  # type: ignore[attr-defined]
+        return None
+    return float(status.dwMemoryLoad)
+
+
+def _gpu_percent() -> Optional[float]:
+    try:
+        result = subprocess.run(
+            ["nvidia-smi", "--query-gpu=utilization.gpu", "--format=csv,noheader,nounits"],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=3,
+        )
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        return None
+
+    if result.returncode != 0:
+        return None
+    values = []
+    for raw_line in result.stdout.splitlines():
+        raw_line = raw_line.strip()
+        if not raw_line:
+            continue
+        try:
+            values.append(float(raw_line))
+        except ValueError:
+            continue
+    if not values:
+        return None
+    return sum(values) / len(values)
+
+
+def inspect_resources(runtime: QueueRuntime, resource_class: Optional[str] = None) -> ResourceSnapshot:
+    cpu_percent = _cpu_percent_posix()
+    ram_percent = _ram_percent_linux()
+    if ram_percent is None:
+        ram_percent = _ram_percent_windows()
+    gpu_percent = _gpu_percent()
+    free_disk = shutil.disk_usage(runtime.paths.base_dir).free / (1024 ** 3)
+
+    reasons: List[str] = []
+    max_cpu = runtime.get_float("QUEUE_MAX_CPU_PERCENT")
+    max_ram = runtime.get_float("QUEUE_MAX_RAM_PERCENT")
+    max_gpu = runtime.get_float("QUEUE_MAX_GPU_PERCENT")
+    min_disk = runtime.get_float("QUEUE_MIN_FREE_DISK_GB")
+
+    if cpu_percent is not None and cpu_percent >= max_cpu:
+        reasons.append(f"CPU ueber Grenzwert ({cpu_percent:.1f}% >= {max_cpu:.1f}%)")
+    if ram_percent is not None and ram_percent >= max_ram:
+        reasons.append(f"RAM ueber Grenzwert ({ram_percent:.1f}% >= {max_ram:.1f}%)")
+    if gpu_percent is not None and gpu_percent >= max_gpu:
+        reasons.append(f"GPU ueber Grenzwert ({gpu_percent:.1f}% >= {max_gpu:.1f}%)")
+    if free_disk < min_disk:
+        reasons.append(f"Freier Speicher zu niedrig ({free_disk:.2f} GB < {min_disk:.2f} GB)")
+    if resource_class == "gpu" and gpu_percent is None:
+        reasons.append("GPU-Status nicht verfuegbar, aber GPU-Job angefragt.")
+
+    return ResourceSnapshot(
+        cpu_percent=cpu_percent,
+        ram_percent=ram_percent,
+        gpu_percent=gpu_percent,
+        free_disk_gb=free_disk,
+        allowed=len(reasons) == 0,
+        reasons=reasons,
+    )
+
+
 def submit_job(args: argparse.Namespace) -> int:
     runtime = QueueRuntime()
     runtime.ensure()
+
+    job_type = args.type
+    if args.resource_class not in RESOURCE_CLASSES:
+        raise SystemExit(f"Unbekannte Ressourcenklasse: {args.resource_class}")
 
     job_id = build_job_id()
     log_file = runtime.paths.logs_dir / f"{job_id}.log"
@@ -249,7 +406,7 @@ def submit_job(args: argparse.Namespace) -> int:
 
     job = {
         "id": job_id,
-        "type": args.type,
+        "type": job_type,
         "priority": args.priority,
         "resource_class": args.resource_class,
         "description": args.description,
@@ -272,22 +429,45 @@ def submit_job(args: argparse.Namespace) -> int:
     save_job(runtime, job)
 
     print(f"Job angelegt: {job_id}")
-    print(f"- Typ: {args.type}")
+    print(f"- Typ: {job_type}")
     print(f"- Prioritaet: {args.priority}")
     print(f"- Ressourcenklasse: {args.resource_class}")
     print(f"- Dry-run: {'ja' if args.dry_run else 'nein'}")
+    print(f"- Retry-Limit: {retry_limit}")
     print(f"- Logdatei: {log_file}")
     print(f"- Fehlerdatei: {err_file}")
+    return 0
+
+
+def list_jobs(args: argparse.Namespace) -> int:
+    runtime = QueueRuntime()
+    jobs = sort_candidate_jobs(load_jobs(runtime))
+    if args.status:
+        jobs = [job for job in jobs if str(job.get("status")) == args.status]
+    if args.limit is not None:
+        jobs = jobs[: args.limit]
+
+    if not jobs:
+        print("Keine passenden Jobs gefunden.")
+        return 0
+
+    for job in jobs:
+        print(
+            f"{job['id']} | {job['status']} | {job['priority']} | "
+            f"{job['resource_class']} | {job['type']} | {job['description']}"
+        )
     return 0
 
 
 def status_report(_: argparse.Namespace) -> int:
     runtime = QueueRuntime()
     jobs = load_jobs(runtime)
-    counts = {key: 0 for key in ["queued", "waiting_resources", "running", "success", "failed", "cancelled"]}
+    counts = {key: 0 for key in VISIBLE_STATUSES}
     for job in jobs:
         status = str(job.get("status"))
         counts[status] = counts.get(status, 0) + 1
+
+    snapshot = inspect_resources(runtime)
 
     print("# Queue Job Manager Status")
     print(f"- Basisverzeichnis: {runtime.paths.base_dir}")
@@ -299,12 +479,41 @@ def status_report(_: argparse.Namespace) -> int:
     print(f"- failed: {counts.get('failed', 0)}")
     print(f"- cancelled: {counts.get('cancelled', 0)}")
     print("")
+    print("# Ressourcen")
+    print(f"- CPU: {'n/v' if snapshot.cpu_percent is None else f'{snapshot.cpu_percent:.1f}%'}")
+    print(f"- RAM: {'n/v' if snapshot.ram_percent is None else f'{snapshot.ram_percent:.1f}%'}")
+    print(f"- GPU: {'n/v' if snapshot.gpu_percent is None else f'{snapshot.gpu_percent:.1f}%'}")
+    print(f"- Freier Speicher: {snapshot.free_disk_gb:.2f} GB")
+    print(f"- Start erlaubt: {'ja' if snapshot.allowed else 'nein'}")
+    if snapshot.reasons:
+        print("- Gruende:")
+        for reason in snapshot.reasons:
+            print(f"  - {reason}")
+    print("")
     print("# Jobliste")
     for job in sort_candidate_jobs(jobs):
         print(
             f"{job['id']} | {job['status']} | {job['priority']} | "
             f"{job['resource_class']} | {job['type']} | {job['description']}"
         )
+    return 0
+
+
+def show_logs(args: argparse.Namespace) -> int:
+    runtime = QueueRuntime()
+    job = get_job(runtime, args.job_id)
+    tail_lines = args.tail if args.tail is not None else runtime.get_int("QUEUE_LOG_TAIL_LINES")
+
+    print(f"# Logs fuer {job['id']}")
+    print(f"- Status: {job['status']}")
+    print(f"- Logdatei: {job['log_file']}")
+    print(f"- Fehlerdatei: {job['error_file']}")
+    print("")
+    print("## Standard-Log")
+    print(tail_text(Path(str(job["log_file"])), tail_lines))
+    print("")
+    print("## Fehler-Log")
+    print(tail_text(Path(str(job["error_file"])), tail_lines))
     return 0
 
 
@@ -421,15 +630,16 @@ def dispatch_cycle(runtime: QueueRuntime, active: Dict[str, subprocess.Popen[str
     max_parallel = runtime.get_int("QUEUE_MAX_PARALLEL_JOBS")
     available_slots = max(0, max_parallel - len(running))
     if available_slots <= 0:
-        return
-
-    for job in sort_candidate_jobs(pending_jobs(jobs)):
-        if available_slots <= 0:
+        for job in pending_jobs(jobs):
             if job["status"] == "queued":
                 job["status"] = "waiting_resources"
                 job["resource_note"] = "Maximale Parallelitaet erreicht."
                 save_job(runtime, job)
-            continue
+        return
+
+    for job in sort_candidate_jobs(pending_jobs(jobs)):
+        if available_slots <= 0:
+            break
 
         resource_class = str(job["resource_class"])
         limit = runtime.class_limit(resource_class)
@@ -438,6 +648,13 @@ def dispatch_cycle(runtime: QueueRuntime, active: Dict[str, subprocess.Popen[str
                 job["status"] = "waiting_resources"
                 job["resource_note"] = f"Ressourcenklasse {resource_class} hat ihr Parallel-Limit erreicht."
                 save_job(runtime, job)
+            continue
+
+        snapshot = inspect_resources(runtime, resource_class)
+        if not snapshot.allowed:
+            job["status"] = "waiting_resources"
+            job["resource_note"] = "; ".join(snapshot.reasons)
+            save_job(runtime, job)
             continue
 
         if job["status"] == "waiting_resources":
@@ -479,7 +696,7 @@ def worker_main(args: argparse.Namespace) -> int:
             has_running = bool(active) or any(str(job.get("status")) == "running" for job in jobs)
 
             if args.once:
-                if not active:
+                if not active and not has_pending:
                     return 0
             elif not daemon_mode:
                 if not has_pending and not has_running:
@@ -501,7 +718,15 @@ def build_parser() -> argparse.ArgumentParser:
     submit.add_argument("--retry-limit", type=int)
     submit.add_argument("--dry-run", action="store_true")
 
+    list_parser = sub.add_parser("list")
+    list_parser.add_argument("--status", choices=VISIBLE_STATUSES)
+    list_parser.add_argument("--limit", type=int)
+
     sub.add_parser("status")
+
+    logs = sub.add_parser("logs")
+    logs.add_argument("job_id")
+    logs.add_argument("--tail", type=int)
 
     cancel = sub.add_parser("cancel")
     cancel.add_argument("job_id")
@@ -519,8 +744,12 @@ def main(argv: List[str]) -> int:
 
     if args.command == "submit":
         return submit_job(args)
+    if args.command == "list":
+        return list_jobs(args)
     if args.command == "status":
         return status_report(args)
+    if args.command == "logs":
+        return show_logs(args)
     if args.command == "cancel":
         return cancel_job(args)
     if args.command == "worker":

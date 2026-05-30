@@ -54,3 +54,13 @@ Der Queue Job Manager ist fuer einen festen Platz im Setup-Menue vorgesehen:
 - Beispiel-Konfiguration anzeigen
 
 Die technische Basis dafuer liegt in `scripts/queue/`.
+
+Aktuell sind dort bereits vorgesehen:
+
+- `menu.sh`
+- `status.sh`
+- `list_jobs.sh`
+- `submit_job.sh`
+- `run_worker.sh`
+- `logs.sh`
+- `cancel_job.sh`

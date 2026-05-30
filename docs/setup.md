@@ -25,6 +25,10 @@ Dabei wird, falls noch nicht vorhanden, auch eine lokale Beispiel-Konfiguration
 fuer den leichten `Queue_Job_Manager` unter
 `~/.ultimate-ki/queue-job-manager/queue.env` vorbereitet.
 
+Danach steht auch das kleine Setup-Menue unter `scripts/queue/menu.sh` bereit,
+ueber das Queue-Status, Job-Einreichung, Worker-Start, Logs und Abbruch direkt
+lokal bedient werden koennen.
+
 ## Lokale Umgebung
 
 Die Beispielkonfiguration kopieren:
@@ -66,6 +70,7 @@ pnpm ai-content github https://github.com/openai/openai-cookbook
 - Social Publishing bleibt bewusst auf offizielle APIs und menschliche Freigabe beschraenkt
 - Der KI Job Queue Manager ist fuer stabilen lokalen Betrieb und Ressourcenschutz gedacht
 - Der leichte Queue_Job_Manager unter `scripts/queue/` ist fuer Setup-nahe FIFO-Steuerung gedacht
+- Der leichte Queue_Job_Manager prueft vor schweren Starts auch CPU, RAM, GPU und freien Speicherplatz
 
 ## Einordnung im Gesamtsetup
 

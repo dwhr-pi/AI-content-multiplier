@@ -17,9 +17,12 @@ fi
 cat <<'EOF'
 
 [ Queue Job Manager ]
+- Setup-Menue: scripts/queue/menu.sh
 - Queue-Status: scripts/queue/status.sh
+- Jobs auflisten: scripts/queue/list_jobs.sh
 - Job einreichen: scripts/queue/submit_job.sh
 - Worker starten: scripts/queue/run_worker.sh
+- Job-Logs: scripts/queue/logs.sh <job-id>
 - Job abbrechen: scripts/queue/cancel_job.sh <job-id>
 - Queue-Konfiguration: ~/.ultimate-ki/queue-job-manager/queue.env
 
