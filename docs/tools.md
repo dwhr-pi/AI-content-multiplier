@@ -57,3 +57,11 @@ geplante Module fuer das Ultimate KI Setup.
 - Einstieg: `scripts/queue/menu.sh`, `submit_job.sh`, `run_worker.sh`, `status.sh`, `list_jobs.sh`, `logs.sh`, `cancel_job.sh`
 - Ziel: zentrale FIFO-Steuerung mit Prioritaeten, Locking, Retry und Dry-Run ohne Cloud-Zwang
 - Schutz: lokale Ressourcenpruefung fuer CPU, RAM, GPU und freien Speicherplatz vor schweren Starts
+
+### SessionWebsiteFactory
+
+- Fokus: lokaler Website-, Landingpage- und Web-App-Prototyp-Generator
+- CLI: `swf new`, `swf build`, `swf preview`, `swf fix`, `swf export`
+- Backends: Ollama standardmaessig, optional OpenClaw, OpenAI oder Gemini
+- Harte Regel: keine Claude- oder Anthropic-Abhaengigkeit
+- Ort: `tools/session-website-factory/`

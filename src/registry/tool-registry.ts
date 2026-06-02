@@ -2,6 +2,7 @@ import type { ToolDefinition } from "../core/types.js";
 import { runContentMultiplier } from "../tools/content-multiplier.js";
 import { runGitHubScout } from "../tools/github-scout.js";
 import { runPromptGenerator } from "../tools/prompt-generator.js";
+import { runSessionWebsiteFactory } from "../tools/session-website-factory.js";
 
 export const toolRegistry: ToolDefinition[] = [
   {
@@ -166,6 +167,21 @@ export const toolRegistry: ToolDefinition[] = [
       "Worker-Loop mit CPU-, RAM-, GPU- und Speicherpruefung",
       "Wrapper fuer Codex, OpenClaw, Ollama, n8n und Shell-Jobs",
     ],
+  },
+  {
+    id: "session-website-factory",
+    name: "SessionWebsiteFactory",
+    status: "mvp",
+    summary: "Erzeugt lokale Website- und Landingpage-Prototypen aus Ideen ohne Claude-Abhaengigkeit.",
+    categories: ["web", "landingpage", "generator"],
+    commands: [
+      {
+        name: "website-factory",
+        summary: "Zeigt Einstieg und Standards fuer die lokale SessionWebsiteFactory-CLI.",
+        example: "pnpm ai-content website-factory",
+      },
+    ],
+    run: runSessionWebsiteFactory,
   },
   {
     id: "knowledge-base",

@@ -1,0 +1,26 @@
+{
+  "name": "session-website-factory",
+  "version": "0.1.0",
+  "description": "Lokales Tool fuer die kontrollierte Erzeugung von Websites, Landingpages und Web-App-Prototypen ohne Claude-Abhaengigkeit.",
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@10.12.1",
+  "bin": {
+    "swf": "dist/index.js"
+  },
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "swf": "tsx src/index.ts"
+  },
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}

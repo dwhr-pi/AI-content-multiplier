@@ -61,6 +61,8 @@ pnpm ai-content github https://github.com/openai/openai-cookbook
 - KI-Queue-Tool: `tools/job_queue_manager/`
 - KI-Leitstand-Frontend: `tools/job_queue_manager/web/`
 - Zentrale Setup-Queue: `scripts/queue/`
+- SessionWebsiteFactory: `tools/session-website-factory/`
+- Ultimate Ubuntu Hybrid: `tools/ultimate-ubuntu-hybrid/`
 
 ## Hinweise
 
@@ -71,6 +73,7 @@ pnpm ai-content github https://github.com/openai/openai-cookbook
 - Der KI Job Queue Manager ist fuer stabilen lokalen Betrieb und Ressourcenschutz gedacht
 - Der leichte Queue_Job_Manager unter `scripts/queue/` ist fuer Setup-nahe FIFO-Steuerung gedacht
 - Der leichte Queue_Job_Manager prueft vor schweren Starts auch CPU, RAM, GPU und freien Speicherplatz
+- Das Ubuntu-Hybrid-Modul bringt einen eigenstaendigen Bash-Installer, USB-Autoinstall-Vorlagen und eine lokale Ansible-Huelle mit
 
 ## Einordnung im Gesamtsetup
 

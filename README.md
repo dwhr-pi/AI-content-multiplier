@@ -51,8 +51,10 @@ Projekt ist das passende Werkzeugregal daneben.
 | Video Factory | Geplant | Erzeugt Storyboards, Prompt-Ketten und Produktionsplaene |
 | Social Publisher | Geplant | Bereitet human-approved Posting-Entwuerfe fuer offizielle Social-APIs vor |
 | KI Job Queue Manager | Geplant | Kontrolliert lokale KI-Auftraege und schuetzt vor CPU-, RAM- und GPU-Ueberlastung |
+| SessionWebsiteFactory | MVP | Erzeugt lokale Website- und Landingpage-Prototypen aus Ideen ohne Claude-Abhaengigkeit |
 | Self Learning Knowledge Base | Geplant | Speichert Wissen fuer spaetere RAG-Workflows |
 | Workflow Exporter | Geplant | Exportiert Ergebnisse in Automationen und Dokumentformate |
+| Ultimate Ubuntu Hybrid | Neu | Automatisiert ein Ubuntu-24.04-Hybrid-Setup fuer Windows, Android, Gaming, Remote-Zugriff und lokale AI-Workloads |
 
 ## Projektstruktur
 
@@ -121,6 +123,7 @@ pnpm ai-content social
 - GitHub fuer Repository-Analysen
 - Offizielle Social-APIs fuer human-approved Publishing
 - KI-Leitstand fuer lokale Queue-, Status- und Ressourcen-Uebersicht
+- SessionWebsiteFactory fuer lokale Landingpage- und Website-Prototypen
 - Nextcloud/myNextcloud fuer Dateiablage
 - Home Assistant fuer lokale Trigger und Benachrichtigungen
 
@@ -132,6 +135,7 @@ pnpm ai-content social
 - [Prompts](docs/prompts.md)
 - [API](docs/api.md)
 - [Setup](docs/setup.md)
+- [Ultimate Ubuntu Hybrid](tools/ultimate-ubuntu-hybrid/README.md)
 
 Bestehende Integrationsnotizen bleiben weiterhin verfuegbar:
 
